@@ -21,6 +21,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/node/add": {
+      "name": "/node/add",
+      "lambdaFunction": "nodeLambdaFnc",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

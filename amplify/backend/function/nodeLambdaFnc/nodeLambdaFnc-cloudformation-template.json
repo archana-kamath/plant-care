@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.1\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.7.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -16,13 +16,13 @@
     "s3Key": {
       "Type": "String"
     },
-    "storageprojectsName": {
+    "storagenodeName": {
       "Type": "String",
-      "Default": "storageprojectsName"
+      "Default": "storagenodeName"
     },
-    "storageprojectsArn": {
+    "storagenodeArn": {
       "Type": "String",
-      "Default": "storageprojectsArn"
+      "Default": "storagenodeArn"
     }
   },
   "Conditions": {
@@ -55,12 +55,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "projectsLambdaFnc",
+            "nodeLambdaFnc",
             {
               "Fn::Join": [
                 "",
                 [
-                  "projectsLambdaFnc",
+                  "nodeLambdaFnc",
                   "-",
                   {
                     "Ref": "env"
@@ -97,12 +97,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "sensordashboardprojeLambdaRole96842064",
+            "sensordashboardprojeLambdaRoleab94b4c1",
             {
               "Fn::Join": [
                 "",
                 [
-                  "sensordashboardprojeLambdaRole96842064",
+                  "sensordashboardprojeLambdaRoleab94b4c1",
                   "-",
                   {
                     "Ref": "env"
@@ -182,14 +182,14 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storageprojectsArn"
+                  "Ref": "storagenodeArn"
                 },
                 {
                   "Fn::Join": [
                     "/",
                     [
                       {
-                        "Ref": "storageprojectsArn"
+                        "Ref": "storagenodeArn"
                       },
                       "index/*"
                     ]
