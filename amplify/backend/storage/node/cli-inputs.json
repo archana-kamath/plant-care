@@ -1,0 +1,10 @@
+{
+  "resourceName": "node",
+  "tableName": "node",
+  "partitionKey": {
+    "fieldName": "node_id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

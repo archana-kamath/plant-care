@@ -1,133 +1,230 @@
 {
+  "api": {
+    "dashboardapi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "sensorLambdaFnc"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "userLambdaFnc"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "projectsLambdaFnc"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "nodeLambdaFnc"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "auth": {
+    "sensordashboardproje": {
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "managed"
+    }
+  },
   "function": {
-    "sensorLambdaFnc": {
+    "nodeLambdaFnc": {
       "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "sensorData",
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
           "attributes": [
             "Name",
             "Arn"
           ],
-          "attributeEnvMap": {
-            "Name": "TABLE_NAME",
-            "Arn": "TABLE_ARN"
-          }
-        }
-      ]
-    },
-    "userLambdaFnc": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
           "category": "storage",
-          "resourceName": "user",
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "attributeEnvMap": {
-            "Name": "TABLE_NAME",
-            "Arn": "TABLE_ARN"
-          }
+          "resourceName": "node"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
     "projectsLambdaFnc": {
       "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "projects",
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
           "attributes": [
             "Name",
             "Arn"
           ],
+          "category": "storage",
+          "resourceName": "projects"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sensorLambdaFnc": {
+      "build": true,
+      "dependsOn": [
+        {
           "attributeEnvMap": {
-            "Name": "TABLE_NAME",
-            "Arn": "TABLE_ARN"
-          }
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "sensorData"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "userLambdaFnc": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "user"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_nodeLambdaFnc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nodeLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_nodeLambdaFnc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nodeLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_projectsLambdaFnc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "projectsLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_projectsLambdaFnc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "projectsLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_sensorLambdaFnc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sensorLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_sensorLambdaFnc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "sensorLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_userLambdaFnc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "userLambdaFnc"
+        }
+      ]
+    },
+    "AMPLIFY_function_userLambdaFnc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "userLambdaFnc"
         }
       ]
     }
   },
   "storage": {
-    "user": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
+    "node": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     },
     "projects": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     },
     "sensorData": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    }
-  },
-  "api": {
-    "dashboardapi": {
-      "service": "API Gateway",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "sensorLambdaFnc",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "userLambdaFnc",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "projectsLambdaFnc",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    }
-  },
-  "auth": {
-    "sensordashboardproje": {
-      "service": "Cognito",
-      "serviceType": "managed",
+      "service": "DynamoDB"
+    },
+    "user": {
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      }
+      "service": "DynamoDB"
     }
   }
 }
