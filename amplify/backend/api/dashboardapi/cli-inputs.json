@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "paths": {
+    "/sensorData": {
+      "name": "/sensorData",
+      "lambdaFunction": "sensorLambdaFnc",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/users": {
+      "name": "/users",
+      "lambdaFunction": "userLambdaFnc",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/projects": {
+      "name": "/projects",
+      "lambdaFunction": "projectsLambdaFnc",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

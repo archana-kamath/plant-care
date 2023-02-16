@@ -1,0 +1,15 @@
+.title {
+    color: gray;
+}
+
+.signout{
+    position: relative;
+    background-color: rgb(216, 175, 71);
+    font-weight:bold;
+    color:rgb(84, 82, 82);
+    border-radius: 1em;
+    width: 6em;
+    height: 3em;
+    margin-left: 70em;
+    bottom: 71em;
+}

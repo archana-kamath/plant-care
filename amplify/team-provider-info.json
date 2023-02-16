@@ -1,0 +1,45 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sensordashboardproje-dev-104828-authRole",
+      "UnauthRoleArn": "arn:aws:iam::902331659163:role/amplify-sensordashboardproje-dev-104828-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::902331659163:role/amplify-sensordashboardproje-dev-104828-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
+      "UnauthRoleName": "amplify-sensordashboardproje-dev-104828-unauthRole",
+      "StackName": "amplify-sensordashboardproje-dev-104828",
+      "StackId": "arn:aws:cloudformation:us-east-1:902331659163:stack/amplify-sensordashboardproje-dev-104828/66d03830-5a0d-11ed-aeaa-0a4580dc23a9",
+      "AmplifyAppId": "du3blwm6ofmaq",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-sensordashboardproje-dev-104828-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "function": {
+        "project": {},
+        "user": {},
+        "sensorLambdaFnc": {
+          "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
+          "s3Key": "amplify-builds/sensorLambdaFnc-705747682f786376586a-build.zip"
+        },
+        "userLambdaFnc": {
+          "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
+          "s3Key": "amplify-builds/userLambdaFnc-426f2f71517542306847-build.zip"
+        },
+        "projectsLambdaFnc": {
+          "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
+          "s3Key": "amplify-builds/projectsLambdaFnc-55487548716e62387178-build.zip"
+        }
+      },
+      "storage": {
+        "user": {},
+        "projects": {},
+        "sensorData": {}
+      },
+      "auth": {
+        "sensordashboardproje": {}
+      },
+      "api": {
+        "dashboardapi": {}
+      }
+    }
+  }
+}
