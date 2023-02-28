@@ -5,11 +5,12 @@ import Authenticate from './components/Home';
 import './components/dashboard.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Amplify, Auth } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import awsconfig from './aws-exports';
 import '@aws-amplify/ui-react/styles.css';
 import Card from 'react-bootstrap/Card';
 import NodeComponent from './components/node/NodeComponent';
+import Home from './components/Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 
 Amplify.configure(awsconfig);
@@ -17,8 +18,7 @@ Auth.configure(awsconfig);
 // Auth.currentCredentials().then(creds => console.log(creds));
 
 
-function App({user}) {
-
+function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -28,18 +28,21 @@ function App({user}) {
               <h3>Plant Care</h3>
             </Card.Body></Card.Body>
         </Card>
-          {/* <h1 className='title'>Hello {user.username} </h1>  */}
         </div>
       </header>
       <div>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/node" element={<NodeComponent/>}/>
+          </Routes>
+        </Router>
         <div>
-          <NodeComponent/>
-          {/* <Dashboard/> */}
-        </div>
+      </div>
       </div>
     </div>
   );
 }
 
-export default withAuthenticator(App);
+export default App;
 

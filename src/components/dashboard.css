@@ -2,7 +2,7 @@
     color: gray;
 }
 
-.signout{
+.signout {
     position: relative;
     background-color: rgb(216, 175, 71);
     font-weight:bold;
@@ -10,6 +10,14 @@
     border-radius: 1em;
     width: 6em;
     height: 3em;
-    margin-left: 70em;
-    bottom: 71em;
+    left: 35em;
+    bottom: 4em;
 }
+
+.amplify-button[data-variation='primary'] {
+    background: linear-gradient(
+      to right,
+      var(--amplify-colors-green-80),
+      var(--amplify-colors-orange-40)
+    );
+  }

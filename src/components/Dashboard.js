@@ -175,7 +175,6 @@ function Dashboard() {
         </div>
         </Grid>
         </div>  
-        <Home/>
   </div>);
 };
 
