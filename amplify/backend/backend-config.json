@@ -33,6 +33,14 @@
           ],
           "category": "function",
           "resourceName": "nodeLambdaFnc"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "addProject"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -66,6 +74,30 @@
     }
   },
   "function": {
+    "addProject": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "projects"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "addUserToGroup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "nodeLambdaFnc": {
       "build": true,
       "dependsOn": [
@@ -144,6 +176,38 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_addProject_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addProject"
+        }
+      ]
+    },
+    "AMPLIFY_function_addProject_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addProject"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroup"
+        }
+      ]
+    },
     "AMPLIFY_function_nodeLambdaFnc_deploymentBucketName": {
       "usedBy": [
         {
