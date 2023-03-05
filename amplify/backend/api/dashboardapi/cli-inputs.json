@@ -28,6 +28,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/projects/add": {
+      "name": "/projects/add",
+      "lambdaFunction": "addProject",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

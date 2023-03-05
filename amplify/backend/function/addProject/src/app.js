@@ -17,23 +17,21 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "node";
+let tableName = "projects";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
 
 const userIdPresent = false; // TODO: update in case is required to use that definition
-const partitionKeyName = "node_id";
+const partitionKeyName = "projectid";
 const partitionKeyType = "S";
 const sortKeyName = "";
 const sortKeyType = "";
 const hasSortKey = sortKeyName !== "";
-const path = "/node/add";
+const path = "/projects/add";
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
-const user_path = '/:' + "user_id";
-const user_id = "user_id";
 
 // declare a new express app
 const app = express()
@@ -56,40 +54,7 @@ const convertUrlType = (param, type) => {
       return param;
   }
 }
-/********************************
- * HTTP Get method for list all nodes using user id *
- ********************************/
 
-app.get(path, function(req, res) {
-  const condition = {}
-  condition[user_id] = {
-    ComparisonOperator: 'EQ'
-  }
-
-  if (userIdPresent && req.apiGateway) {
-    condition[user_id]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-  } else {
-    try {
-      condition[user_id]['AttributeValueList'] = [ convertUrlType(req.params[user_id], partitionKeyType) ];
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-
-  let queryParams = {
-    TableName: tableName
-  }
-
-  dynamodb.scan(queryParams, (err, data) => {
-    if (err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err});
-    } else {
-      res.json(data.Items);
-    }
-  });
-});
 /********************************
  * HTTP Get method for list objects *
  ********************************/
