@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Card, Form, Button, Table} from 'react-bootstrap';
+import { Container, Card, Form, Button, Table,  Col, Row} from 'react-bootstrap';
 import axios from 'axios'
 import urls from '../utils';
+import MapComponent from '../maps/MapComponent';
+import { v4 as uuidv4 } from 'uuid';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class NodeComponent extends Component {
 
@@ -10,7 +13,7 @@ class NodeComponent extends Component {
 
        this.state ={
             userId:'',
-            projectId:'',
+            projectId:'project1',
             nodeId:'',
             plantType:'',
             moistureThreshold:'',
@@ -30,6 +33,20 @@ class NodeComponent extends Component {
        this.handleLatitudeChange = this.handleLatitudeChange.bind(this);
        this.handleLongitudeChange = this.handleLongitudeChange.bind(this);
        this.onSelectChange = this.onSelectChange.bind(this);
+    }
+
+    componentDidMount(){
+      axios.get(urls.backendURL+'/node/add').then(response => response.data).then((data) => {
+        console.log(data.response)
+        this.setState({ allNodes: data})
+      }).catch((err) => console.log(err));
+    }
+
+    handleCallback = (childData1,childData2) =>{
+      this.setState({
+        latitude: childData1,
+        longitude: childData2
+      })
     }
 
     onSelectChange = (rowId) => {
@@ -53,7 +70,7 @@ class NodeComponent extends Component {
       this.setState({ projectId : e.target.value });
     } 
     handleNodeIdChange = (e) => {
-      this.setState({ nodeId : e.target.value });
+       this.setState({ nodeId : e.target.value });
     } 
     handlePlantTypeChange = (e) => {
       this.setState({ plantType: e.target.value });
@@ -77,9 +94,9 @@ class NodeComponent extends Component {
     onNodeSubmission = (event) => {
       event.preventDefault();
 
-      if(this.state.nodeId=='' || this.state.plantType=='' ||
-      this.state.moistureThreshold=='' || this.state.temperatureThreshold=='' ||
-      this.state.humidityThreshold=='' || this.state.latitude=='' || this.state.longitude==''){
+      if( this.state.plantType==='' ||
+      this.state.moistureThreshold==='' || this.state.temperatureThreshold==='' ||
+      this.state.humidityThreshold==='' || this.state.latitude==='' || this.state.longitude===''){
         alert("Please entry all the fields")
         return
       }
@@ -94,9 +111,9 @@ class NodeComponent extends Component {
       console.log(this.state.longitude)
 
       const nodeReq = {
-        user_id:'user1',
-        project_id:'project1',
-        node_id: this.state.nodeId,
+        user_id:this.state.userId,
+        project_id:this.state.projectId,
+        node_id: uuidv4(),
         plant_type: this.state.plantType,
         moisture_threshold: this.state.moistureThreshold,
         temperature_threshold: this.state.temperatureThreshold,
@@ -107,6 +124,7 @@ class NodeComponent extends Component {
 
       axios.post(urls.backendURL+'/node/add',nodeReq).then(response => response.data).then((data) => {
       console.log(data.response)
+      console.log(JSON.stringify(data))
       this.setState({
         userId:'',
         projectId:'',
@@ -118,16 +136,21 @@ class NodeComponent extends Component {
         latitude:'',
         longitude:''
        })
-    });
+    }).catch((err) => console.log(err));;
 
   }
   onViewAllNodes = (event) => {
     event.preventDefault();
 
-    axios.get(urls.backendURL+'/node/add').then(response => response.data).then((data) => {
-      console.log(data.response)
+    axios.get(urls.backendURL+'/node/add')
+    .then(response => 
+      response.data
+      //console.log("response "+response)
+    )
+    .then((data) => {
+     // console.log("data "+ JSON.stringify(data))
       this.setState({ allNodes: data})
-    });
+    }).catch((err) => console.log(err));
   }
 
   onNodeDeletion = (event) => {
@@ -139,8 +162,7 @@ class NodeComponent extends Component {
 	   axios.delete(urls.backendURL+'/node/add/object/'+node).then(response => response.data).then((data) => {
        console.log(data.response)
      })
-	  }
-    )
+	  }).catch((err) => console.log(err));
     this.setState({
       selectedNodes:[]
     })
@@ -148,17 +170,23 @@ class NodeComponent extends Component {
     axios.get(urls.backendURL+'/node/add').then(response => response.data).then((data) => {
       console.log(data.response)
       this.setState({ allNodes: data})
-    });
+    }).catch((err) => console.log(err));;
+  }
+
+  onGoogleMaps= (event) => {
+    event.preventDefault();
+    console.log(this.state.selectedNodes)
+    event.preventDefault();
   }
 
   render() {
-    return (
+    return (<React.Fragment>
         <Container fluid>
-            <Card style={{ width: '40rem' }}><Card.Body>
-            <h3>Node Page </h3>
-
-            <Form.Control type="text" value={this.state.nodeId}
-            placeholder="node#" onChange={this.handleNodeIdChange}/>
+          <Table>
+          <Row>
+            <Col>
+            <Card style={{ width: '20rem'}}><Card.Body>
+            <h4>Node : {this.state.projectId}</h4>
 
             <Form.Control type="text" value={this.state.plantType}
             placeholder="Plant Type" onChange={this.handlePlantTypeChange}/>
@@ -178,32 +206,44 @@ class NodeComponent extends Component {
             <Form.Control type="text" value={this.state.longitude}
             placeholder="Longitude" onChange={this.handleLongitudeChange}/>
 
-            <div className="col d-flex justify-content-center">
+            &nbsp;
+            <Row>
             <Button  onClick={this.onNodeSubmission} variant="dark">Submit</Button>
+            </Row>
             &nbsp;
-            <Button  onClick={this.onViewAllNodes} variant="dark">View</Button>
-            &nbsp;
-            <Button  onClick={this.onNodeDeletion} variant="dark">Delete</Button>
-            </div>
-
+            <Row>
+            <Button  onClick={this.onGoogleMaps} variant="dark">Reload Maps</Button>
+            </Row>
+         
             </Card.Body></Card>
+            </Col><Col>
+            <Card>
+              <Card.Body>
+                <MapComponent 
+                      parentCallback = {this.handleCallback}
+                      myPropUserId={this.state.userId}
+                      myPropProjectId={this.state.projectId}>
+                </MapComponent>
+              </Card.Body>
+            </Card>
+            </Col>
+            </Row>
+            <Row>
             <Card><Card.Body>
             {(this.state.allNodes.length === 0) ? (
 				<div></div>
 			   ):(
         <div>
-          <Table >
+          <Table>
             {this.state.allNodes.length ===0?(<div></div>):(
-              <thead class="thead-dark">
+              <thead className="thead-dark">
               <tr><th>Node ID</th><th>Project ID</th>
               <th>Plant Type</th><th>Moisture Threshold</th>
               <th>Temperature Threshold</th><th>Humidity Threshold</th>
               <th>Latitude</th><th>Longitude</th></tr>
             </thead> 
             )}
-
           {this.state.allNodes.map(item => (
-
             <tbody>
               <tr key={item.node_id}>
                 <td>{item.node_id}</td>
@@ -216,15 +256,19 @@ class NodeComponent extends Component {
                 <td>{item.longitude}</td>
                 <td><input
                     type="checkbox"
-                    checked={this.state.selectedNodes.includes(item.node_id)}
+                    defaultChecked={this.state.selectedNodes.includes(item.node_id)}
                     onClick={() => this.onSelectChange(item.node_id)}
                   /></td>
               </tr>
             </tbody>
-          ))} </Table>
+          ))}</Table>
+          <Row><Col>
+          <Button  onClick={this.onViewAllNodes} variant="dark">Reload Table</Button></Col>
+          <Col><Button  onClick={this.onNodeDeletion} variant="dark">Delete Node</Button></Col>
+          </Row>
       </div>)}
-            </Card.Body></Card>
-        </Container>
+            </Card.Body></Card></Row></Table>
+        </Container></React.Fragment>
     );
   }
 }

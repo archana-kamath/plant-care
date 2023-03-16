@@ -46,3 +46,11 @@ body {
   float: none; 
   margin-bottom: 10px; 
 }
+
+ .resize {
+  height: 450px;
+  width: 450px;
+  object-fit: cover;
+  margin: 0.5rem;
+  border-radius: 10px;
+}
