@@ -11,31 +11,42 @@ import Card from 'react-bootstrap/Card';
 import NodeComponent from './components/node/NodeComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Table,  Col, Row} from 'react-bootstrap';
-
+import NavBar from './components/navbar';
 
 Amplify.configure(awsconfig);
 Auth.configure(awsconfig);
 // Auth.currentCredentials().then(creds => console.log(creds));
-
 
 function App({user}) {
 
   return (
     <div className="App">
       <header className="App-header">
-        <div>
-        <Card bg={'Dark'.toLowerCase()} text={'white'}>
-            <Card.Body>
+       
               <h3>Plant Care</h3>
-            </Card.Body>
-        </Card>
-          {/* <h1 className='title'>Hello {user.username} </h1>  */}
-        </div>
+     
+        <h4 className='oval-box'> Hello {user.username} ! &#x1F600; </h4>    
       </header>
-      <div>
-          <NodeComponent/>
-      </div>
+
+      <main>
+        <NavBar/>
+      </main>
     </div>
+
+
+    // <div className="App">
+    //   <header className="App-header">
+    //     <div>
+    //     <Card bg={'Dark'.toLowerCase()} text={'white'}>
+    //         <Card.Body>
+    //           <h3>Plant Care</h3>
+    //         </Card.Body>
+    //     </Card>
+    //       {/* <h1 className='title'>Hello {user.username} </h1>  */}
+    //     </div>
+    //   </header>
+  
+    // </div>
   );
 }
 
