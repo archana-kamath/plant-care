@@ -1,0 +1,67 @@
+.my-brand {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    border-style: solid;
+    border-color: black;
+    width: 20%;
+    background-color: lightseagreen;
+  }
+  .my-brand1 {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    padding: 9px;
+    border-style: solid;
+    border-color: black;
+    width: 20%;
+    background-color: lightseagreen;
+  }
+.mr-navbar{
+    padding-bottom: 10px;
+}
+
+.mr-auto{
+    width: 100%;
+}
+
+.mr-main{
+    color: lightcoral;
+    padding: 20px;
+}
+
+.oval-box {
+    width: 200px;
+    height: 50px;
+    border-radius: 100px / 50px; /* half of the width and height */
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: large;
+    color: white;
+  }
+
+  .my-table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  
+  .my-table th,
+  .my-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .my-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
