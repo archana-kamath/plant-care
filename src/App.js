@@ -4,7 +4,6 @@ import Dashboard from './components/Dashboard';
 import Authenticate from './components/Home';
 import './components/dashboard.css';
 import { Amplify, Auth } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import awsconfig from './aws-exports';
 import '@aws-amplify/ui-react/styles.css';
 import Card from 'react-bootstrap/Card';
@@ -17,7 +16,8 @@ import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 
 import AddProject from '../src/components/project/addProject';
 import ListProjects from '../src/components/project/listProject';
-import Home from '../src/components/Home';
+import Home from './components/Home';
+import Profile from './components/Profile';
 
 Amplify.configure(awsconfig);
 Auth.configure(awsconfig);
@@ -40,11 +40,11 @@ function App({ user }) {
       <body>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Home />} />
             <Route path="/addproj" element={<AddProject />} />
             <Route path="/listproj" element={<ListProjects />} />
             <Route path="/node" element={<NodeComponent />} />
-            <Route path="/logout" element={<Home />} />
+            <Route exact path="/profile" element={<Profile/>}/>
           </Routes>
         </BrowserRouter>
       </body>
@@ -67,5 +67,5 @@ function App({ user }) {
   );
 }
 
-export default withAuthenticator(App);
+export default App;
 
