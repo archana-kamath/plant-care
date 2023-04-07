@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.1\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.1\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -23,18 +23,6 @@
     "storageprojectsArn": {
       "Type": "String",
       "Default": "storageprojectsArn"
-    },
-    "storageprojectsTableNewFunctionName": {
-      "Type": "String",
-      "Default": "storageprojectsTableNewFunctionName"
-    },
-    "storageprojectsTableNewFunctionArn": {
-      "Type": "String",
-      "Default": "storageprojectsTableNewFunctionArn"
-    },
-    "storageprojectsTableNewFunctionStreamArn": {
-      "Type": "String",
-      "Default": "storageprojectsTableNewFunctionArn"
     }
   },
   "Conditions": {
@@ -67,12 +55,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "projectsLambdaFnc",
+            "addProject",
             {
               "Fn::Join": [
                 "",
                 [
-                  "projectsLambdaFnc",
+                  "addProject",
                   "-",
                   {
                     "Ref": "env"
@@ -109,12 +97,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "sensordashboardprojeLambdaRole96842064",
+            "sensordashboardprojeLambdaRolec238e9e8",
             {
               "Fn::Join": [
                 "",
                 [
-                  "sensordashboardprojeLambdaRole96842064",
+                  "sensordashboardprojeLambdaRolec238e9e8",
                   "-",
                   {
                     "Ref": "env"
@@ -211,59 +199,6 @@
             }
           ]
         }
-      }
-    },
-    "projectsTableNewFunctionTriggerPolicy": {
-      "DependsOn": [
-        "LambdaExecutionRole"
-      ],
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyName": "lambda-trigger-policy-projectsTableNewFunction",
-        "Roles": [
-          {
-            "Ref": "LambdaExecutionRole"
-          }
-        ],
-        "PolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:DescribeStream",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                "dynamodb:ListStreams"
-              ],
-              "Resource": [
-                {
-                  "Ref": "storageprojectsTableNewFunctionStreamArn"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    "projectsTableNewFunctionTrigger": {
-      "Type": "AWS::Lambda::EventSourceMapping",
-      "DependsOn": [
-        "projectsTableNewFunctionTriggerPolicy"
-      ],
-      "Properties": {
-        "BatchSize": 100,
-        "Enabled": true,
-        "EventSourceArn": {
-          "Ref": "storageprojectsTableNewFunctionStreamArn"
-        },
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "LambdaFunction",
-            "Arn"
-          ]
-        },
-        "StartingPosition": "LATEST"
       }
     }
   },

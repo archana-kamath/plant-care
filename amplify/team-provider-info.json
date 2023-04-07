@@ -18,26 +18,35 @@
         "user": {},
         "sensorLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
-          "s3Key": "amplify-builds/sensorLambdaFnc-705747682f786376586a-build.zip"
+          "s3Key": "amplify-builds/sensorLambdaFnc-48734c73327830325854-build.zip"
         },
         "userLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
-          "s3Key": "amplify-builds/userLambdaFnc-426f2f71517542306847-build.zip"
+          "s3Key": "amplify-builds/userLambdaFnc-77596f78723435554463-build.zip"
         },
         "projectsLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
-          "s3Key": "amplify-builds/projectsLambdaFnc-55487548716e62387178-build.zip"
+          "s3Key": "amplify-builds/projectsLambdaFnc-4b472b61616366427377-build.zip"
         },
         "nodeLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
-          "s3Key": "amplify-builds/nodeLambdaFnc-79727278776a75354235-build.zip"
+          "s3Key": "amplify-builds/nodeLambdaFnc-556f424653613354344b-build.zip"
+        },
+        "addProject": {
+          "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
+          "s3Key": "amplify-builds/addProject-386b637274774d61536c-build.zip"
+        },
+        "addUserToGroup": {
+          "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
+          "s3Key": "amplify-builds/addUserToGroup-4c4c4a2f396a764c6533-build.zip"
         }
       },
       "storage": {
         "user": {},
         "projects": {},
         "sensorData": {},
-        "node": {}
+        "node": {},
+        "projectsTableNewFunction": {}
       },
       "auth": {
         "sensordashboardproje": {}

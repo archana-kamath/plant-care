@@ -32,6 +32,8 @@ const path = "/node/add";
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
+const user_path = '/:' + "user_id";
+const user_id = "user_id";
 
 // declare a new express app
 const app = express()
@@ -54,7 +56,40 @@ const convertUrlType = (param, type) => {
       return param;
   }
 }
+/********************************
+ * HTTP Get method for list all nodes using user id *
+ ********************************/
 
+app.get(path, function(req, res) {
+  const condition = {}
+  condition[user_id] = {
+    ComparisonOperator: 'EQ'
+  }
+
+  if (userIdPresent && req.apiGateway) {
+    condition[user_id]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
+  } else {
+    try {
+      condition[user_id]['AttributeValueList'] = [ convertUrlType(req.params[user_id], partitionKeyType) ];
+    } catch(err) {
+      res.statusCode = 500;
+      res.json({error: 'Wrong column type ' + err});
+    }
+  }
+
+  let queryParams = {
+    TableName: tableName
+  }
+
+  dynamodb.scan(queryParams, (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      res.json({error: 'Could not load items: ' + err});
+    } else {
+      res.json(data.Items);
+    }
+  });
+});
 /********************************
  * HTTP Get method for list objects *
  ********************************/
@@ -180,7 +215,7 @@ app.post(path, function(req, res) {
       res.statusCode = 500;
       res.json({error: err, url: req.url, body: req.body});
     } else {
-      res.json({success: 'post call succeed!', url: req.url, data: data})
+      res.json({success: 'Node added!', url: req.url, data: data})
     }
   });
 });

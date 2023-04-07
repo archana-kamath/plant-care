@@ -24,7 +24,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "projectsLambdaFnc"
+          "resourceName": "nodeLambdaFnc"
         },
         {
           "attributes": [
@@ -32,7 +32,15 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "nodeLambdaFnc"
+          "resourceName": "addProject"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "projectsLambdaFnc"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -66,6 +74,30 @@
     }
   },
   "function": {
+    "addProject": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "projects"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "addUserToGroup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "nodeLambdaFnc": {
       "build": true,
       "dependsOn": [
@@ -99,6 +131,15 @@
           ],
           "category": "storage",
           "resourceName": "projects"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "projectsTableNewFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -144,6 +185,38 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_addProject_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addProject"
+        }
+      ]
+    },
+    "AMPLIFY_function_addProject_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addProject"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroup"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroup"
+        }
+      ]
+    },
     "AMPLIFY_function_nodeLambdaFnc_deploymentBucketName": {
       "usedBy": [
         {
@@ -215,6 +288,10 @@
       "service": "DynamoDB"
     },
     "projects": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "projectsTableNewFunction": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     },

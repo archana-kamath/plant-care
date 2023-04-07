@@ -17,16 +17,16 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "projects";
+let tableName = "projectsTable";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
 
 const userIdPresent = false; // TODO: update in case is required to use that definition
-const partitionKeyName = "projectid";
+const partitionKeyName = "username";
 const partitionKeyType = "S";
-const sortKeyName = "";
-const sortKeyType = "";
+const sortKeyName = "proj_name";
+const sortKeyType = "S";
 const hasSortKey = sortKeyName !== "";
 const path = "/projects";
 const UNAUTH = 'UNAUTH';
@@ -55,41 +55,95 @@ const convertUrlType = (param, type) => {
   }
 }
 
+// Define the API endpoint to retrieve table entries for a particular user
+// Define a route to retrieve items based on partition key
+app.get(path +'/all', (req, res) => {
+
+  let qparams = {
+    TableName: tableName,
+    partitionKeyName: {
+      S: "limeka"
+    }
+    // KeyConditionExpression: "username = :uname",
+    // ExpressionAttributeValues: {
+    //   ":uname": { S : "limeka" }
+    // }
+  };
+  // res.send(`Query parameters: ${JSON.stringify(qparams)}`);
+
+  // Query DynamoDB using the partition key from the request params
+  dynamodb.query(qparams, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(`Error retrieving items from DynamoDB: username=${qparams}, tableName=${qparams.TableName}, error=${err}`);
+    } else {
+      console.log(data);
+      res.json(data.Items);
+    }
+  });
+});
+
+
 /********************************
  * HTTP Get method for list objects *
  ********************************/
 
 app.get(path + hashKeyPath, function(req, res) {
   const condition = {}
-  condition[partitionKeyName] = {
-    ComparisonOperator: 'EQ'
-  }
-
-  if (userIdPresent && req.apiGateway) {
-    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-  } else {
-    try {
-      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
+    condition[partitionKeyName] = {
+      ComparisonOperator: 'EQ'
     }
-  }
-
-  let queryParams = {
-    TableName: tableName,
-    KeyConditions: condition
-  }
-
-  dynamodb.query(queryParams, (err, data) => {
-    if (err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err});
+  
+    if (userIdPresent && req.apiGateway) {
+      condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
     } else {
-      res.json(data.Items);
+      try {
+        condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
+      } catch(err) {
+        res.statusCode = 500;
+        res.json({error: 'Wrong column type ' + err});
+      }
     }
-  });
+  
+    let queryParams = {
+      TableName: tableName,
+      KeyConditions: condition
+    }
+  
+    dynamodb.query(queryParams, (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.json({error: 'Could not load items: ' + err});
+      } else {
+        res.json(data.Items);
+      }
+    });
+
+ 
 });
+
+// // Route to fetch all projects from the DynamoDB table
+// app.get('/projects/all', (req, res) => {
+//   // const userId = req.query.user_id;
+//   console.log("user Id from frontend is ",userId);
+//   const params = {
+//     TableName: tableName,
+//   //   KeyConditionExpression: 'user_id = :userid',
+//   //   ExpressionAttributeValues: {
+//   //   ':userid': userId,
+//   // },
+//   };
+
+//   dynamodb.scan(params, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send('Error fetching items from database');
+//     } else {
+//       res.json(data.Items);
+//       // res.status(200).send(data.Items);
+//     }
+//   });
+// });
 
 /*****************************************
  * HTTP Get method for get single object *

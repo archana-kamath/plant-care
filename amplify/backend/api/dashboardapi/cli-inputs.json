@@ -15,16 +15,23 @@
         "setting": "open"
       }
     },
-    "/projects": {
-      "name": "/projects",
-      "lambdaFunction": "projectsLambdaFnc",
+    "/node/add": {
+      "name": "/node/add",
+      "lambdaFunction": "nodeLambdaFnc",
       "permissions": {
         "setting": "open"
       }
     },
-    "/node/add": {
-      "name": "/node/add",
-      "lambdaFunction": "nodeLambdaFnc",
+    "/projects/add": {
+      "name": "/projects/add",
+      "lambdaFunction": "addProject",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/projects": {
+      "name": "/projects",
+      "lambdaFunction": "projectsLambdaFnc",
       "permissions": {
         "setting": "open"
       }
