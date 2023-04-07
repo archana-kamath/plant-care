@@ -10,6 +10,8 @@ import '@aws-amplify/ui-react/styles.css';
 import Card from 'react-bootstrap/Card';
 import NodeComponent from './components/node/NodeComponent';
 import Home from './components/Home';
+import Profile from './components/Profile';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 
@@ -35,6 +37,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/node" element={<NodeComponent/>}/>
+            <Route exact path="/profile" element={<Profile/>}/>
           </Routes>
         </Router>
         <div>
