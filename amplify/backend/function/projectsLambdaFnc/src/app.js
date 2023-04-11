@@ -60,14 +60,12 @@ const convertUrlType = (param, type) => {
 app.get(path +'/all', (req, res) => {
 
   let qparams = {
-    TableName: tableName,
-    partitionKeyName: {
-      S: "limeka"
-    }
-    // KeyConditionExpression: "username = :uname",
-    // ExpressionAttributeValues: {
-    //   ":uname": { S : "limeka" }
-    // }
+    ExpressionAttributeValues: {
+      ":uname": req.query.name
+    },
+    
+    KeyConditionExpression: "username = :uname",
+    TableName: tableName
   };
   // res.send(`Query parameters: ${JSON.stringify(qparams)}`);
 
@@ -242,6 +240,28 @@ app.post(path, function(req, res) {
 /**************************************
 * HTTP remove method to delete object *
 ***************************************/
+app.delete(path+'/delete' , (req, res) => {
+
+  let qparams = {
+    Key: {
+      'username': { S: req.query.uname },
+      'proj_name': { S: req.query.proj_name }
+    },
+    TableName: tableName
+  };
+  // res.send(`Query parameters: ${JSON.stringify(qparams)}`);
+
+  // Query DynamoDB using the partition key from the request params
+  dynamodb.deleteItem(qparams, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(`Error retrieving items from DynamoDB: username=${qparams}, tableName=${qparams.TableName}, error=${err}`);
+    } else {
+      console.log("item deleted successulyy");
+      
+    }
+  });
+});
 
 app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   const params = {};

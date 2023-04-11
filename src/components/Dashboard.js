@@ -14,6 +14,8 @@ import 'chartjs-adapter-date-fns';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import Barometer from './Barometer';
+import Temperature from './Thermometer';
+import Speedometer from './Speedometer';
 import {
   MDBCard,
   MDBCardTitle,
@@ -207,56 +209,51 @@ function Dashboard() {
     });
   };
 
-
-  //   const filterMonth = (month) => {
-  //     console.log(month.value);
-  //     chart.update();
-  // }
+  async function getUserProjects()
+  {
+    return 2; 
+  } 
+  async function getUserNodes()
+  {
+    return 1;
+  }
+  const styles = {
+    card: {
+      height: `90%`,
+    },
+    title: {
+      fontSize: "1em",
+      color: "#000",
+      marginTop: "10px"
+    }
+   
+  };
 
   useInterval(() => {
     chart();
   }, 10000);
 
   return (
-
     <div>
       <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
-        <MDBCol>
-          <MDBCard className='h-100'>
-            <MDBCardTitle>Plant1</MDBCardTitle>
+        {  Array.from({ length: 2 }, (_, i) =><MDBCol>
+          <MDBCard style={styles.card}>
+            <MDBCardTitle>Project {i + 1}</MDBCardTitle>
             {/* <MDBCardText>
               temperature Text..
             </MDBCardText> */}
             <MDBCardBody>
               <Carousel>
-                <div>
-                  {/* <img src="assets/1.jpeg" /> */}
-                   <ReactSpeedometer
-                    fluidWidth={false}
-                    forceRender={true}
-                    needleHeightRatio={0.8}
-                    minValue={0}
-                    maxValue={100}
-                    value={humid.at(-1)}
-                    needleColor="steelblue"
-                    width={200}
-                    height={200}
-                  /> 
-                  <Barometer id="dial9" value="40" title="Barometer" />
-                  {/* <p className="legend">Legend 1</p> */}
-                </div>
-                <div>
-                  {/* <img src="assets/2.jpeg" /> */}
-                  <Barometer id="dial9" value="40" title="Barometer" />
-                  <Barometer id="dial9" value="40" title="Barometer" />
-                  {/* <p className="legend">Legend 2</p> */}
-                </div>
-                <div>
-                  {/* <img src="assets/3.jpeg" /> */}
-                  <Barometer id="dial9" value="40" title="Barometer" />
-                  <Barometer id="dial9" value="40" title="Barometer" />
-                  {/* <p className="legend">Legend 3</p> */}
-                </div>
+                {Array.from({ length: 2 }, (_, j) =><div>
+                <div style={styles.title}>
+                 Plant {j + 1}
+                  </div>
+                  <Speedometer id="speedometer" value={humid.at(-1)} title="Soil Moisture"/>
+                    <div className="sameRow">
+                  <Barometer id="dial9" value="40" title="Humidity"/>
+                  <Temperature id="dial8" value="40" title="Recorded Temperature" />
+                  </div>
+                </div>)}
               </Carousel>
 
             </MDBCardBody>
@@ -264,104 +261,11 @@ function Dashboard() {
               <small className='text-muted'>Last updated 3 mins ago</small>
             </MDBCardText>
           </MDBCard>
-        </MDBCol>
-        <MDBCol>
-          <MDBCard className='h-100'>
-            <MDBCardTitle>Humidity</MDBCardTitle>
-            <MDBCardText>
-              humidity Text..
-            </MDBCardText>
-            <MDBCardBody>
-              <ReactSpeedometer
-                fluidWidth={false}
-                forceRender={true}
-                needleHeightRatio={0.8}
-                minValue={0}
-                maxValue={100}
-                value={humid.at(-1)}
-                needleColor="steelblue"
-              />
-            </MDBCardBody>
-            <MDBCardText>
-              <small className='text-muted'>Last updated 3 mins ago</small>
-            </MDBCardText>
-          </MDBCard>
-        </MDBCol>
-        <MDBCol>
-          <MDBCard className='h-100'>
-            <MDBCardTitle>Soil Moisture</MDBCardTitle>
-            <MDBCardText>
-              soil moisture Text..
-            </MDBCardText>
-            <MDBCardBody>
-              <ReactSpeedometer
-                fluidWidth={false}
-                forceRender={true}
-                needleHeightRatio={0.8}
-                minValue={0}
-                maxValue={100}
-                value={humid.at(-1)}
-                needleColor="steelblue"
-              />
-            </MDBCardBody>
-            <MDBCardText>
-              <small className='text-muted'>Last updated 3 mins ago</small>
-            </MDBCardText>
-          </MDBCard>
-        </MDBCol>
-      </MDBRow>
-
-      <MDBCard>
-        {/* <MDBCardTitle>Humidity</MDBCardTitle>
-            <MDBCardText>
-              humidity Text..
-            </MDBCardText> */}
+        </MDBCol>)}
+        <MDBCard class="h-2">
         <MDBCardBody>
           <Line
             data={chartData}
-          // options={{
-          //     responsive: true,
-          //     scales: {
-          //     y: {
-          //         ticks: {
-          //             autoSkip: true,
-          //             maxTicksLimit: 10,
-          //             beginAtZero: true,
-          //         },
-          //         gridLines: {
-          //             display: true,
-          //         },
-          //     },
-          //     x: {
-          //         gridLines: {
-          //             display: false,
-          //         },
-          //     },
-          //     },
-          //     pan: {
-          //         enabled: true,
-          //         mode: "xy",
-          //         speed: 1,
-          //         threshold: 1,
-          //     },
-          //     zoom: {
-          //         enabled: true,
-          //         drag: true,
-          //         mode: "xy",
-          //         limits: {
-          //             max: 1,
-          //             min: 0.5,
-          //     },
-          //     rangeMin: {
-          //         x: 2,
-          //         y: 1,
-          //     },
-          //     rangeMax: {
-          //         x: 1,
-          //         y: 1000,
-          //     },
-          // },
-          // }}
           />
           <div>
             <input type="date" ref={sdate} />
@@ -375,84 +279,9 @@ function Dashboard() {
           <small className='text-muted'>Last updated 3 mins ago</small>
         </MDBCardText>
       </MDBCard>
-
-
-      {/* <Grid container spacing={10} columns={3}>
-        <Grid item xs={6} md={4}>
-        <h3 className='title'>Current Temperature(in °C)</h3>
-      
-        </Grid>
-        <Grid item xs={6} md={4}>
-        <h3 className='title'>Current Humidity(in %)</h3>
-       
-        </Grid>
-        <Grid item xs={6} md={4}>
-        <h3 className='title'>Current Moisture(in VWC)</h3>
-        <ReactSpeedometer
-            fluidWidth={false}
-            forceRender={true}
-            needleHeightRatio={0.8}
-            minValue={0}
-            maxValue={1000}
-            value={moist.at(-1)}
-            needleColor="steelblue"
-            />
-        </Grid> 
-    </Grid>
-     <div>
-        <Grid item xs = {'auto'} md={10}>
-        <h3 className='title'>Trends over the past day</h3>
-        <div>
-            <Line
-                data={chartData}
-                options={{
-                    responsive: true,
-                    scales: {
-                    y: {
-                        ticks: {
-                            autoSkip: true,
-                            maxTicksLimit: 10,
-                            beginAtZero: true,
-                        },
-                        gridLines: {
-                            display: true,
-                        },
-                    },
-                    x: {
-                        gridLines: {
-                            display: false,
-                        },
-                    },
-                    },
-                    pan: {
-                        enabled: true,
-                        mode: "xy",
-                        speed: 1,
-                        threshold: 1,
-                    },
-                    zoom: {
-                        enabled: true,
-                        drag: true,
-                        mode: "xy",
-                        limits: {
-                            max: 1,
-                            min: 0.5,
-                    },
-                    rangeMin: {
-                        x: 2,
-                        y: 1,
-                    },
-                    rangeMax: {
-                        x: 1,
-                        y: 1000,
-                    },
-                },
-                }}
-            />
-        </div>
-        </Grid>
-        </div>  
-        <Home/> */}
+      </MDBRow>
+    
+  
     </div>);
 };
 

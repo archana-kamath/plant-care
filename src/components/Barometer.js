@@ -2,19 +2,22 @@ import { Chart } from "react-google-charts";
 
 const styles = {
     dial: {
-      width: `auto`,
+      width: `100%`,
       height: `auto`,
       color: "#000",
-      border: "0.5px solid #fff",
+      border: "30px solid #fff",
       padding: "2px"
     },
     title: {
       fontSize: "1em",
-      color: "#000"
+      color: "#000", 
+      marginTop: "10px",
+      "align-items" : "start",
+      display: "flex"
     }
   };
 
-function Barometer() {
+const Barometer = ({value, title }) => {
    return  (
    <div style={styles.dial}>
    <Chart
@@ -23,7 +26,7 @@ function Barometer() {
         loader={<div></div>}
         data={[
             ["Label", "Value"],
-            ["text", Number(10)]
+            ["Humidity", Number(10)]
         ]}
         options={{
             redFrom: 90,
@@ -35,6 +38,9 @@ function Barometer() {
             max: 200
         }}
     />
+      <div style={styles.title}>
+        {title}: {value}%
+      </div>
     </div>
    )
 }
