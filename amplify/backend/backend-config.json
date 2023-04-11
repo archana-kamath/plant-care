@@ -24,14 +24,6 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "projectsLambdaFnc"
-        },
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
           "resourceName": "nodeLambdaFnc"
         },
         {
@@ -41,6 +33,14 @@
           ],
           "category": "function",
           "resourceName": "addProject"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "projectsLambdaFnc"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -131,6 +131,15 @@
           ],
           "category": "storage",
           "resourceName": "projects"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "projectsTableNewFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -279,6 +288,10 @@
       "service": "DynamoDB"
     },
     "projects": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "projectsTableNewFunction": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     },
