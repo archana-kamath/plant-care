@@ -18,6 +18,7 @@ import AddProject from '../src/components/project/addProject';
 import ListProjects from '../src/components/project/listProject';
 import Home from './components/Home';
 import Profile from './components/Profile';
+import ProjectUpdateForm from './components/project/updateProject';
 
 Amplify.configure(awsconfig);
 Auth.configure(awsconfig);
@@ -43,6 +44,7 @@ function App({ user }) {
             <Route path="/" element={<Home />} />
             <Route path="/addproj" element={<AddProject />} />
             <Route path="/listproj" element={<ListProjects />} />
+            <Route path="/updateproj" element={<ProjectUpdateForm/>}/>
             <Route path="/node" element={<NodeComponent />} />
             <Route exact path="/profile" element={<Profile/>}/>
           </Routes>

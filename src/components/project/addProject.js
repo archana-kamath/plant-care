@@ -70,7 +70,7 @@ return(
 
            <form onSubmit={handleSubmit}  style={{fontWeight:"800"}}>
               
-
+               <h4>Please fill the Project details below</h4>
                <FloatingLabel controlId="proj_name" label="Project Name" className="mb-3">
                <Form.Control type="text"  name="proj_name" onChange={e=>{setName(e.target.value)}} required/>
                </FloatingLabel>

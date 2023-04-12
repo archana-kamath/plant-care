@@ -6,15 +6,15 @@ import { Button, Container,Row,Col } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import urls from '../utils';
 import { Auth } from 'aws-amplify';
+import AddProject from './addProject';
 
 export default function ListProjects() {
   
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
   const [counter, setCounter] = useState();
-  
   const [user_id, setUserId] = useState(null);
-    
+  
   // async function fetchUser() {
   //   try {
   //     const user = await Auth.currentAuthenticatedUser();
@@ -122,9 +122,10 @@ export default function ListProjects() {
 
     <Row>
       <Col>
-   
-   
+      <h4>{user_id}'s Projects </h4>
+     <br></br>
     <Table striped bordered hover>
+      
     <thead>
       <tr>
         <th>Index</th>
@@ -161,9 +162,14 @@ export default function ListProjects() {
     
   </Table>
   </Col>
+  </Row>
+  <br></br>
+  <Row>
     <Col>
-    <Button onClick={handleClick}  variant='dark'></Button>
+    <Button onClick={handleClick}  variant='dark'>Add Project</Button>
     </Col>
+    
+  
   </Row>
   
         {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>

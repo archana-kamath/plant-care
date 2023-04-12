@@ -50,9 +50,10 @@ function ProjectUpdateForm(props) {
   return (
     
     <Container fluid>
+          <h4>Update Project Details</h4>
             <Card style={{ width: '60rem' }}>
                 <Card.Body>
-
+           
            <form   style={{fontWeight:"800"}}>
               
                <FloatingLabel controlId="proj_name" label="Project Name" className="mb-3">
