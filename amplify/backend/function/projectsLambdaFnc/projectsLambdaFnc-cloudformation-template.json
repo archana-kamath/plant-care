@@ -23,6 +23,30 @@
     "storageprojectsArn": {
       "Type": "String",
       "Default": "storageprojectsArn"
+    },
+    "storageprojectsTableNewFunctionName": {
+      "Type": "String",
+      "Default": "storageprojectsTableNewFunctionName"
+    },
+    "storageprojectsTableNewFunctionArn": {
+      "Type": "String",
+      "Default": "storageprojectsTableNewFunctionArn"
+    },
+    "storageprojectsTableNewFunctionStreamArn": {
+      "Type": "String",
+      "Default": "storageprojectsTableNewFunctionArn"
+    },
+    "storageprojName": {
+      "Type": "String",
+      "Default": "storageprojName"
+    },
+    "storageprojArn": {
+      "Type": "String",
+      "Default": "storageprojArn"
+    },
+    "storageprojStreamArn": {
+      "Type": "String",
+      "Default": "storageprojArn"
     }
   },
   "Conditions": {
@@ -199,6 +223,59 @@
             }
           ]
         }
+      }
+    },
+    "projTriggerPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-trigger-policy-proj",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storageprojStreamArn"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "projTrigger": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "projTriggerPolicy"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Ref": "storageprojStreamArn"
+        },
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
+        },
+        "StartingPosition": "LATEST"
       }
     }
   },

@@ -8,7 +8,7 @@ import AddProject from './project/addProject';
 import ListProjects from './project/listProject';
 import Home from './Home';
 import NodeComponent from './node/NodeComponent';
-
+import ProjectUpdateForm from './project/updateProject';
 import './navbar.css';
 
 function NavBar() {
@@ -38,6 +38,7 @@ function NavBar() {
     <Routes>
     <Route path="/" element={<Dashboard/>} />
     <Route path="/addproj" element={<AddProject/>} />
+    <Route path="/updateproj" element={<ProjectUpdateForm/>} />
     <Route path="/listproj" element={<ListProjects/>} />
     <Route path="/node" element={<NodeComponent/>} />
     <Route path="/logout" element={<Home/>} />
