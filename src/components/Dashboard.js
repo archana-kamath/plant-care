@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchAllSensorData, getSensorData } from '../services/sensorData.service';
+import { getProjects } from '../services/project.service';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 import Home from './Home';
@@ -29,10 +30,17 @@ function Dashboard() {
     const [moist, setMoisture] = useState([]);
     const [chartData, setChartData] = useState({labels:[],datasets:[]});
     const [cData, setCdata] = useState([]);
+    
 
     useInterval(async()=>{
       var d = await getSensorData('11-2022');
       console.log('D:', d);
+
+      //Fetching projects based on logged in user
+      var projects= await getProjects('limeka');
+      console.log("projevts in service file",projects);
+
+
       var data = await fetchAllSensorData();
       console.log('Data:', data);
       for (var i in data) {
