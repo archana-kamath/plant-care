@@ -36,13 +36,13 @@ const formFields = {
           ]}>
         {({ signOut, user }) => (
           <main>
-            <div>
+            {/* <div>
                 <h1 className='title'>Hello {user.username}</h1>
                 <button className='signout' onClick={ signOut }>Log Out</button>
-            </div>
-            <div>
+            </div> */}
+            {/* <div> */}
                 <Dashboard/>
-            </div>
+            {/* </div> */}
           </main>
         )}
         </Authenticator>

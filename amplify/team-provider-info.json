@@ -26,7 +26,7 @@
         },
         "projectsLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
-          "s3Key": "amplify-builds/projectsLambdaFnc-4d52597a2b5161597356-build.zip"
+          "s3Key": "amplify-builds/projectsLambdaFnc-37703469784c6c545430-build.zip"
         },
         "nodeLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
@@ -47,8 +47,7 @@
         "projects": {},
         "sensorData": {},
         "node": {},
-        "projectsTableNewFunction": {},
-        "proj": {}
+        "projectsTableNewFunction": {}
       },
       "auth": {
         "sensordashboardproje": {}
