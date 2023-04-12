@@ -9,426 +9,280 @@ import '@aws-amplify/ui/dist/style.css';
 import ReactSpeedometer from "react-d3-speedometer";
 import { Grid } from '@material-ui/core';
 import { Line } from "react-chartjs-2";
-import { Chart, registerables} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-date-fns';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+import Barometer from './Barometer';
+import Temperature from './Thermometer';
+import Speedometer from './Speedometer';
 import {
-    MDBCard,
-    MDBCardTitle, 
-    MDBCardText,
+  MDBCard,
+  MDBCardTitle,
+  MDBCardText,
   MDBCardBody,
   MDBCardGroup,
   MDBRow,
   MDBCol,
-  } from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit';
 Chart.register(...registerables);
 
 function Dashboard() {
-    const [time, setTime] = useState([]);
-    const [temp, setTemp] = useState([]);
-    const [humid, setHumidity] = useState([]);
-    const [moist, setMoisture] = useState([]);
-    const [chartData, setChartData] = useState({labels:[],datasets:[]});
-    const [cData, setCdata] = useState([]);
+  const [time, setTime] = useState([]);
+  const [temp, setTemp] = useState([]);
+  const [humid, setHumidity] = useState([]);
+  const [moist, setMoisture] = useState([]);
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const [cData, setCdata] = useState([]);
 
-    useInterval(async()=>{
-      var d = await getSensorData('11-2022');
-      console.log('D:', d);
-      var data = await fetchAllSensorData();
-      console.log('Data:', data);
-      for (var i in data) {
-          var timeStamp = (data[i]['time'].slice(0,-1));
-          var timeFormat = new Date(timeStamp);
-          timeFormat = String(timeFormat).split('GMT')[0];
-          var temperature = parseInt(data[i]['temperature']);
-          var humidity = parseInt(data[i]['humidity']);
-          var moisture = parseInt(data[i]['moisture']);
-      }
-     
-      setTime(time =>[...time, timeFormat]);
-      setTemp(temp =>[...temp, temperature]);
-      setHumidity(humid =>[...humid, humidity]);
-      setMoisture(moist =>[...moist, moisture]);
-      setCdata(data);
-},10000);
-
-console.log('setData', cData);
-
-const time1 = [];
-const temp1 = [];
-const humid1 = [];
-const moist1 = [];
-
-const extractData=cData.map(
-    (a)=>{ 
-        let x = new Date(a.time);
-        x = String(x).split('GMT')[0];               
-        return(
-            time1.push(x.substring(0,15)),
-            temp1.push(a.temperature),
-            moist1.push(a.moisture),
-            humid1.push(a.humidity)                
-        )
-    }
-)
-
-        // var time2 = []
-    
-    // for (let i=0; i<time1.length; i++) {
-    //     time2.push(time1[i].substring(0,15))
-    // }
-
-    //console.log('Time1', time1);
-
-    
-    const [dates, setDates] = useState();
-    const [dataPoints, setDataPoints] = useState([]);
-
-    const sdate = useRef();
-    const edate = useRef();
-
-    const filterData = () => {
-        const dates = [...time1];
-        const dataPoints = [...cData];
-        console.log('first:',dates, dataPoints);
-
-        let value1 = sdate.current.value;
-        let sd = new Date(value1)
-        sd.setDate(sd.getDate() + 1);
-        let sd1 = String(sd).split('GMT')[0];
-        let value2 = edate.current.value;
-        let ed = new Date(value2)
-        ed.setDate(ed.getDate() + 1);
-        let ed1 = String(ed).split('GMT')[0];
-        console.log('values:',sd1, ed1);
-
-
-        let sd2 =  sd1.substring(0,15);
-        let ed2 =  ed1.substring(0,15);
-        const startdate = dates.indexOf(sd2);
-        const enddate = dates.lastIndexOf(ed2);
-        console.log(startdate, enddate);
-
-        const filterDate = dates.slice(startdate, enddate+1);
-        const filterDataPoints = dataPoints.slice(startdate, enddate + 1);
-        console.log('fd:', filterDate, filterDataPoints);
-
-        setDates(filterDate);
-        setDataPoints(filterDataPoints);
+  useInterval(async () => {
+    var d = await getSensorData('11-2022');
+    console.log('D:', d);
+    var data = await fetchAllSensorData();
+    console.log('Data:', data);
+    for (var i in data) {
+      var timeStamp = (data[i]['time'].slice(0, -1));
+      var timeFormat = new Date(timeStamp);
+      timeFormat = String(timeFormat).split('GMT')[0];
+      var temperature = parseInt(data[i]['temperature']);
+      var humidity = parseInt(data[i]['humidity']);
+      var moisture = parseInt(data[i]['moisture']);
     }
 
-    const temp2 = [];
-    const humid2 = [];
-    const moist2 = [];
+    setTime(time => [...time, timeFormat]);
+    setTemp(temp => [...temp, temperature]);
+    setHumidity(humid => [...humid, humidity]);
+    setMoisture(moist => [...moist, moisture]);
+    setCdata(data);
+  }, 10000);
 
-    const extractFilteredData=dataPoints.map(
-        (b)=>{               
-            return(
-                temp2.push(b.temperature),
-                moist2.push(b.moisture),
-                humid2.push(b.humidity)                 
-            )
-        }
-    )
+  console.log('setData', cData);
 
-    const chart = () => {
-      setChartData({
-        labels: dates,
-        datasets: [
-          {
-            label: "Temperature(°C)",
-            data: temp2,
-          },
-          {
-             label: "Humidity(%)",
-             data: humid2,
-          },
-          {
-             label: "Moisture(VWC)",
-             data: moist2,
-          },
-        ],
-        options : {
-              responsive: true,
-                  scales: {
-                  y: {
-                      ticks: {
-                          autoSkip: true,
-                          maxTicksLimit: 10,
-                          beginAtZero: true,
-                      },
-                      gridLines: {
-                          display: false,
-                      },
-                  },
-                  x: {
-                      ticks: {
-                          autoSkip: true,
-                          maxTicksLimit: 1000,
-                      },
-                      gridLines: {
-                          display: false,
-                      },
-                      type: 'time',
-                      time: {
-                          units:'hours'
-                      },
-                      min: '2022-11-01',
-                      max: '2022-12-31',
-                  },
-                  },
-                  pan: {
-                      enabled: true,
-                      mode: "xy",
-                      speed: 1,
-                      threshold: 1,
-                  },
-                  zoom: {
-                      enabled: true,
-                      drag: true,
-                      mode: "xy",
-                      limits: {
-                          max: 1,
-                          min: 0.5,
-                  },
-                  rangeMin: {
-                      x: 2,
-                      y: 1,
-                  },
-                  rangeMax: {
-                      x: 1,
-                      y: 1000,
-                  },
-              },
+  const time1 = [];
+  const temp1 = [];
+  const humid1 = [];
+  const moist1 = [];
 
-        },
-      });
-    };
+  const extractData = cData.map(
+    (a) => {
+      let x = new Date(a.time);
+      x = String(x).split('GMT')[0];
+      return (
+        time1.push(x.substring(0, 15)),
+        temp1.push(a.temperature),
+        moist1.push(a.moisture),
+        humid1.push(a.humidity)
+      )
+    }
+  )
 
+  // var time2 = []
 
-  //   const filterMonth = (month) => {
-  //     console.log(month.value);
-  //     chart.update();
+  // for (let i=0; i<time1.length; i++) {
+  //     time2.push(time1[i].substring(0,15))
   // }
-    
-    useInterval(()=>{
-        chart();
-    },10000);
 
-  return(
-    
-  <div>
-   <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
-   <MDBCol>
-    <MDBCard className='h-100'>
-        <MDBCardTitle>Temperature</MDBCardTitle>
-            <MDBCardText>
+  //console.log('Time1', time1);
+
+
+  const [dates, setDates] = useState();
+  const [dataPoints, setDataPoints] = useState([]);
+
+  const sdate = useRef();
+  const edate = useRef();
+
+  const filterData = () => {
+    const dates = [...time1];
+    const dataPoints = [...cData];
+    console.log('first:', dates, dataPoints);
+
+    let value1 = sdate.current.value;
+    let sd = new Date(value1)
+    sd.setDate(sd.getDate() + 1);
+    let sd1 = String(sd).split('GMT')[0];
+    let value2 = edate.current.value;
+    let ed = new Date(value2)
+    ed.setDate(ed.getDate() + 1);
+    let ed1 = String(ed).split('GMT')[0];
+    console.log('values:', sd1, ed1);
+
+
+    let sd2 = sd1.substring(0, 15);
+    let ed2 = ed1.substring(0, 15);
+    const startdate = dates.indexOf(sd2);
+    const enddate = dates.lastIndexOf(ed2);
+    console.log(startdate, enddate);
+
+    const filterDate = dates.slice(startdate, enddate + 1);
+    const filterDataPoints = dataPoints.slice(startdate, enddate + 1);
+    console.log('fd:', filterDate, filterDataPoints);
+
+    setDates(filterDate);
+    setDataPoints(filterDataPoints);
+  }
+
+  const temp2 = [];
+  const humid2 = [];
+  const moist2 = [];
+
+  const extractFilteredData = dataPoints.map(
+    (b) => {
+      return (
+        temp2.push(b.temperature),
+        moist2.push(b.moisture),
+        humid2.push(b.humidity)
+      )
+    }
+  )
+
+  const chart = () => {
+    setChartData({
+      labels: dates,
+      datasets: [
+        {
+          label: "Temperature(°C)",
+          data: temp2,
+        },
+        {
+          label: "Humidity(%)",
+          data: humid2,
+        },
+        {
+          label: "Moisture(VWC)",
+          data: moist2,
+        },
+      ],
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 10,
+              beginAtZero: true,
+            },
+            gridLines: {
+              display: false,
+            },
+          },
+          x: {
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 1000,
+            },
+            gridLines: {
+              display: false,
+            },
+            type: 'time',
+            time: {
+              units: 'hours'
+            },
+            min: '2022-11-01',
+            max: '2022-12-31',
+          },
+        },
+        pan: {
+          enabled: true,
+          mode: "xy",
+          speed: 1,
+          threshold: 1,
+        },
+        zoom: {
+          enabled: true,
+          drag: true,
+          mode: "xy",
+          limits: {
+            max: 1,
+            min: 0.5,
+          },
+          rangeMin: {
+            x: 2,
+            y: 1,
+          },
+          rangeMax: {
+            x: 1,
+            y: 1000,
+          },
+        },
+
+      },
+    });
+  };
+
+  async function getUserProjects()
+  {
+    return 2; 
+  } 
+  async function getUserNodes()
+  {
+    return 1;
+  }
+  const styles = {
+    card: {
+      height: `90%`,
+    },
+    title: {
+      fontSize: "1em",
+      color: "#000",
+      marginTop: "10px"
+    }
+   
+  };
+
+  useInterval(() => {
+    chart();
+  }, 10000);
+
+  return (
+    <div>
+      <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
+        {  Array.from({ length: 2 }, (_, i) =><MDBCol>
+          <MDBCard style={styles.card}>
+            <MDBCardTitle>Project {i + 1}</MDBCardTitle>
+            {/* <MDBCardText>
               temperature Text..
-            </MDBCardText>
-          <MDBCardBody>
-          <ReactSpeedometer
-            fluidWidth={false}
-            forceRender={true}
-            needleHeightRatio={0.8}
-            minValue={0}
-            maxValue={100}
-            value={humid.at(-1)}
-            needleColor="steelblue"
-        />
-          </MDBCardBody>
-          <MDBCardText>
-            <small className='text-muted'>Last updated 3 mins ago</small>
-          </MDBCardText>
-        </MDBCard>
-        </MDBCol>
-        <MDBCol>
-    <MDBCard className='h-100'>
-        <MDBCardTitle>Humidity</MDBCardTitle>
-            <MDBCardText>
-              humidity Text..
-            </MDBCardText>
-          <MDBCardBody>
-          <ReactSpeedometer
-            fluidWidth={false}
-            forceRender={true}
-            needleHeightRatio={0.8}
-            minValue={0}
-            maxValue={100}
-            value={humid.at(-1)}
-            needleColor="steelblue"
-        />
-          </MDBCardBody>
-          <MDBCardText>
-            <small className='text-muted'>Last updated 3 mins ago</small>
-          </MDBCardText>
-        </MDBCard>
-        </MDBCol>
-        <MDBCol>
-        <MDBCard className='h-100'>
-        <MDBCardTitle>Soil Moisture</MDBCardTitle>
-            <MDBCardText>
-              soil moisture Text..
-            </MDBCardText>
-          <MDBCardBody>
-          <ReactSpeedometer
-            fluidWidth={false}
-            forceRender={true}
-            needleHeightRatio={0.8}
-            minValue={0}
-            maxValue={100}
-            value={humid.at(-1)}
-            needleColor="steelblue"
-        />
-          </MDBCardBody>
-          <MDBCardText>
-            <small className='text-muted'>Last updated 3 mins ago</small>
-          </MDBCardText>
-        </MDBCard>
-        </MDBCol>
-  </MDBRow>
-
-    <MDBCard>
-        {/* <MDBCardTitle>Humidity</MDBCardTitle>
-            <MDBCardText>
-              humidity Text..
             </MDBCardText> */}
-          <MDBCardBody>
+            <MDBCardBody>
+              <Carousel>
+                {Array.from({ length: 2 }, (_, j) =><div>
+                <div style={styles.title}>
+                 Plant {j + 1}
+                  </div>
+                  <Speedometer id="speedometer" value={humid.at(-1)} title="Soil Moisture"/>
+                    <div className="sameRow">
+                  <Barometer id="dial9" value="40" title="Humidity"/>
+                  <Temperature id="dial8" value="40" title="Recorded Temperature" />
+                  </div>
+                </div>)}
+              </Carousel>
+
+            </MDBCardBody>
+            <MDBCardText>
+              <small className='text-muted'>Last updated 3 mins ago</small>
+            </MDBCardText>
+          </MDBCard>
+        </MDBCol>)}
+        <MDBCard class="h-2">
+        <MDBCardBody>
           <Line
-                data={chartData}
-                // options={{
-                //     responsive: true,
-                //     scales: {
-                //     y: {
-                //         ticks: {
-                //             autoSkip: true,
-                //             maxTicksLimit: 10,
-                //             beginAtZero: true,
-                //         },
-                //         gridLines: {
-                //             display: true,
-                //         },
-                //     },
-                //     x: {
-                //         gridLines: {
-                //             display: false,
-                //         },
-                //     },
-                //     },
-                //     pan: {
-                //         enabled: true,
-                //         mode: "xy",
-                //         speed: 1,
-                //         threshold: 1,
-                //     },
-                //     zoom: {
-                //         enabled: true,
-                //         drag: true,
-                //         mode: "xy",
-                //         limits: {
-                //             max: 1,
-                //             min: 0.5,
-                //     },
-                //     rangeMin: {
-                //         x: 2,
-                //         y: 1,
-                //     },
-                //     rangeMax: {
-                //         x: 1,
-                //         y: 1000,
-                //     },
-                // },
-                // }}
-            />
-             <div>
+            data={chartData}
+          />
+          <div>
             <input type="date" ref={sdate} />
             <input type="date" ref={edate} />
             <button onClick={filterData}>Filter</button>
             {/* <br/>
             <input type="month" onChange={filterMonth}/> */}
           </div>
-          </MDBCardBody>
-          <MDBCardText>
-            <small className='text-muted'>Last updated 3 mins ago</small>
-          </MDBCardText>
-        </MDBCard>
- 
-
-    {/* <Grid container spacing={10} columns={3}>
-        <Grid item xs={6} md={4}>
-        <h3 className='title'>Current Temperature(in °C)</h3>
-      
-        </Grid>
-        <Grid item xs={6} md={4}>
-        <h3 className='title'>Current Humidity(in %)</h3>
-       
-        </Grid>
-        <Grid item xs={6} md={4}>
-        <h3 className='title'>Current Moisture(in VWC)</h3>
-        <ReactSpeedometer
-            fluidWidth={false}
-            forceRender={true}
-            needleHeightRatio={0.8}
-            minValue={0}
-            maxValue={1000}
-            value={moist.at(-1)}
-            needleColor="steelblue"
-            />
-        </Grid> 
-    </Grid>
-     <div>
-        <Grid item xs = {'auto'} md={10}>
-        <h3 className='title'>Trends over the past day</h3>
-        <div>
-            <Line
-                data={chartData}
-                options={{
-                    responsive: true,
-                    scales: {
-                    y: {
-                        ticks: {
-                            autoSkip: true,
-                            maxTicksLimit: 10,
-                            beginAtZero: true,
-                        },
-                        gridLines: {
-                            display: true,
-                        },
-                    },
-                    x: {
-                        gridLines: {
-                            display: false,
-                        },
-                    },
-                    },
-                    pan: {
-                        enabled: true,
-                        mode: "xy",
-                        speed: 1,
-                        threshold: 1,
-                    },
-                    zoom: {
-                        enabled: true,
-                        drag: true,
-                        mode: "xy",
-                        limits: {
-                            max: 1,
-                            min: 0.5,
-                    },
-                    rangeMin: {
-                        x: 2,
-                        y: 1,
-                    },
-                    rangeMax: {
-                        x: 1,
-                        y: 1000,
-                    },
-                },
-                }}
-            />
-        </div>
-        </Grid>
-        </div>  
-        <Home/> */}
-  </div>);
+        </MDBCardBody>
+        <MDBCardText>
+          <small className='text-muted'>Last updated 3 mins ago</small>
+        </MDBCardText>
+      </MDBCard>
+      </MDBRow>
+    
+  
+    </div>);
 };
 
 export default Dashboard;

@@ -21,3 +21,12 @@
       var(--amplify-colors-orange-40)
     );
   }
+
+  .sameRow {
+    font-family: sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  

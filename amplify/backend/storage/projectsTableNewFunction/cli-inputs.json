@@ -1,0 +1,16 @@
+{
+  "resourceName": "projectsTableNewFunction",
+  "tableName": "projectsTable",
+  "partitionKey": {
+    "fieldName": "username",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "proj_name",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": [
+    "projectsLambdaFnc"
+  ]
+}
