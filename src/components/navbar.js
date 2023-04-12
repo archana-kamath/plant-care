@@ -11,41 +11,75 @@ import NodeComponent from './node/NodeComponent';
 import ProjectUpdateForm from './project/updateProject';
 import './navbar.css';
 
+// import './navbar.css';
+
 function NavBar() {
   return (
-    <Navbar className='mr-navbar'>
-    <BrowserRouter>
-    <nav className="mr-auto">
-         <Nav className="my-brand">
-         <Link style={{color:'black'}}  to="/">Dashboard</Link>
-         </Nav>
-          <Nav className="my-brand">
-          <Link  style={{color:'black'}}  to="/listproj">Project</Link>
-          </Nav> 
-          <Nav className="my-brand">
-          <Link style={{color:'black'}}  to="/node">Node</Link>
-          </Nav>
-          <Nav className="my-brand">
-          <Link style={{color:'black'}}  to="/user">My Profile</Link>
-          </Nav>
-          <Nav className="my-brand">
-          <Link style={{color:'black'}} to="/logout">Logout</Link>
-          {/* <Button style={{ backgroundColor: 'dark-green', color: 'white', padding: '10px', borderRadius: '5px' }}>Logout </Button> */}
-          </Nav>
-      </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-4">
+  {/* <!-- Container wrapper --> */}
+  <div class="container-fluid">
+    {/* <!-- Toggle button --> */}
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarRightAlignExample"
+      aria-controls="navbarRightAlignExample"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
 
+    {/* <!-- Collapsible wrapper --> */}
+    <div class="collapse navbar-collapse" id="navbarRightAlignExample">
+      {/* <!-- Left links --> */}
+   
+      {/* <!-- Left links --> */}
+      <a class="navbar-nav ms-auto mb-2 mb-lg-0" href="/profile">Welcome </a>
+      &nbsp;&nbsp;
+      <div class="dropdown">
+        <a
+          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          href="/profile"
+          id="navbarDropdownMenuAvatar"
+          role="button"
+          data-mdb-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
+            class="rounded-circle"
+            height="25"
+            alt="Black and White Portrait of a Man"
+            loading="lazy"
+          />
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdownMenuAvatar"
+        >
+          <li>
+            <a class="dropdown-item" href="#">My profile</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Settings</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {/* <!-- Collapsible wrapper --> */}
+  </div>
+  {/* <!-- Container wrapper --> */}
+</nav>
 
-    <Routes>
-    <Route path="/" element={<Dashboard/>} />
-    <Route path="/addproj" element={<AddProject/>} />
-    <Route path="/updateproj" element={<ProjectUpdateForm/>} />
-    <Route path="/listproj" element={<ListProjects/>} />
-    <Route path="/node" element={<NodeComponent/>} />
-    <Route path="/logout" element={<Home/>} />
-    </Routes>
-    </BrowserRouter>
-    </Navbar>
   );
 }
 
 export default NavBar;
+
+
+ 
