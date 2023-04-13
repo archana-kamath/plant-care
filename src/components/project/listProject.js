@@ -86,6 +86,11 @@ export default function ListProjects() {
   // }, [items]);
    
 
+  //Navigate to Node Component
+  function handleNodeClick(project_id){
+    navigate('/node', { state: project_id });
+  }
+
   //Update function
   function handleUpdate(item){
     const data= item.item
@@ -132,6 +137,7 @@ export default function ListProjects() {
         <th>Project Name</th>
         <th>Project Description</th>
         <th>Project Type</th>
+        <th>Node</th>
         <th>Update</th>
         <th>Delete </th>
       </tr>
@@ -149,6 +155,9 @@ export default function ListProjects() {
             <td>{item.proj_name}</td>
             <td>{item.proj_desc}</td>
             <td>{item.proj_type}</td>
+            <td>
+              <button onClick={()=> handleNodeClick(item.project_id)}>Nodes</button>
+            </td>
             <td>
               <button onClick={() => handleUpdate({item})}>Update</button>
             </td>
