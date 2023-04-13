@@ -2,22 +2,65 @@ import React  from 'react';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
-
+import { Button, Container,Row,Col } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import urls from '../utils';
-export default function ListProjects() {
+import { Auth } from 'aws-amplify';
+import AddProject from './addProject';
 
+export default function ListProjects() {
+  
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const [counter, setCounter] = useState();
+  const [user_id, setUserId] = useState(null);
+  
+  // async function fetchUser() {
+  //   try {
+  //     const user = await Auth.currentAuthenticatedUser();
+  //     setUsername(user.username);
+  //     console.log("user is ",user.username);
+  //   } catch (error) {
+  //     console.log('Error fetching user:', error);
+  //   }
+  // }
+  
+   useEffect(() => {
+    
+    const response = new Promise(async (resolve, reject) => {
+      const user = await Auth.currentAuthenticatedUser();
+      if (user){
+        console.log("use effect",user.username);
+        resolve(user);
+      }
+      else{
+        reject("eroor");
+      }});
+    
+    response.then(res=>
+      {
+        console.log("res = ",res.username);
+        setUserId(res.username);
+        fetchItems(res.username);
+      })
 
-  function fetchItems() {
-      //  axios.get("https://o1hd2bxh00.execute-api.us-east-1.amazonaws.com/dev/projects")
-      console.log(urls.backendURL)
-      axios.get(urls.backendURL+'/projects')
+  },  []);
+
+  function fetchItems(userName) { 
+      
+      console.log("user to send backend",userName)
+      axios.get(urls.backendURL+'/projects/listproj',{
+        params:{
+          name: userName
+        }
+      })
        .then(response=>{
-        console.log(response.data);
+        if (response.data.length==0){
+          navigate('/addproj')
+        }
+        console.log("data for username received from backend",response.data.length);
         setItems(response.data);
+        setCounter(items.length);
         console.log("Items fectched are",items)
        })
        .catch(error=>{
@@ -32,21 +75,45 @@ export default function ListProjects() {
 
   // fetch the list of items from the DynamoDB table
   useEffect(() => {
-    fetchItems()
+    console.log("user id to send in api req",user_id);
+    fetchItems();
     // fetchItems().then(data => setItems(data));
     // console.log("Item is ",items);
   }, []);
 
+  // useEffect(() => {
+  //   setCounter(items.length);
+  // }, [items]);
+   
+
+  //Navigate to Node Component
+  function handleNodeClick(project_id){
+    navigate('/node', { state: project_id });
+  }
+
+  //Update function
+  function handleUpdate(item){
+    const data= item.item
+    console.log("Item to be updated is ",data);
+    navigate('/updateproj', { state: data });
+  }
+
+
   // handle the delete option
   function handleDelete(id) {
+    console.log("id in handle delete is ",id);
+    console.log("username in handle delte",user_id);
+           axios.delete(urls.backendURL+'/projects/object/'+id+'/'+user_id)
 
-        axios.delete(`https://o1hd2bxh00.execute-api.us-east-1.amazonaws.com/dev/projects/object/${id}`)
+        // axios.delete(`https://o1hd2bxh00.execute-api.us-east-1.amazonaws.com/dev/projects/object/${id}`)
           .then(response => {
             console.log(`Item ${id} deleted successfully.`);
+           
             // do something else, like update state or refresh the item list
                // update the list of items in the state
         const newItems = items.filter(item => item.id !== id);
         setItems(newItems);
+        fetchItems(user_id);
           })
           .catch(error => {
             console.log(`Error deleting item ${id}: ${error}`);
@@ -55,39 +122,72 @@ export default function ListProjects() {
       }
   
   return (
-    <div>
-   
+    <React.Fragment>
+    <Container fluid>
+
+    <Row>
+      <Col>
+      <h4>{user_id}'s Projects </h4>
+     <br></br>
     <Table striped bordered hover>
+      
     <thead>
       <tr>
-        <th>Project Id</th>
+        <th>Index</th>
         <th>Project Name</th>
         <th>Project Description</th>
         <th>Project Type</th>
+        <th>Node</th>
+        <th>Update</th>
         <th>Delete </th>
       </tr>
     </thead>
 
     <tbody>
-        {items.map(item => (
-          <tr key={item.projectid}>
-            <td>{item.projectid}</td>
+        {items.map((item,index) => (
+          // <tr key={item.projectid}>
+            <tr key={index}>
+            {/* <td>{counter + index + 1}</td>  */}
+          
+            {/* <td>{item.project_id}</td> */}
+
+            <td>{index+1}</td>
             <td>{item.proj_name}</td>
             <td>{item.proj_desc}</td>
             <td>{item.proj_type}</td>
             <td>
-              <button onClick={() => handleDelete(item.projectid)}>Delete</button>
+              <button onClick={()=> handleNodeClick(item.project_id)}>Nodes</button>
             </td>
+            <td>
+              <button onClick={() => handleUpdate({item})}>Update</button>
+            </td>
+            <td>
+              <button onClick={() => handleDelete(item.project_id)}>Delete</button>
+            </td>
+
           </tr>
         ))}
       </tbody>
     
   </Table>
-
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
+  </Col>
+  </Row>
+  <br></br>
+  <Row>
+    <Col>
+    <Button onClick={handleClick}  variant='dark'>Add Project</Button>
+    </Col>
+    
+  
+  </Row>
+  
+        {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
         <Button onClick={handleClick} style={{backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px'}}>Add New Project</Button>
-        </div>  
-    </div>
+        </div>   */}
+  
+  </Container>
+  
+  </React.Fragment>
 
   );
 }

@@ -39,7 +39,8 @@
         "addUserToGroup": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
           "s3Key": "amplify-builds/addUserToGroup-4c4c4a2f396a764c6533-build.zip"
-        }
+        },
+        "projectFunction": {}
       },
       "storage": {
         "user": {},

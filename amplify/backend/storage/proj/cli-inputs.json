@@ -1,0 +1,28 @@
+{
+  "resourceName": "proj",
+  "tableName": "project",
+  "partitionKey": {
+    "fieldName": "project_id",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "user_id",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "user_id-project_id-index",
+      "partitionKey": {
+        "fieldName": "user_id",
+        "fieldType": "string"
+      },
+      "sortKey": {
+        "fieldName": "project_id",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": [
+    "projectsLambdaFnc"
+  ]
+}
