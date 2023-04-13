@@ -35,6 +35,18 @@
     "storageprojectsTableNewFunctionStreamArn": {
       "Type": "String",
       "Default": "storageprojectsTableNewFunctionArn"
+    },
+    "storageprojName": {
+      "Type": "String",
+      "Default": "storageprojName"
+    },
+    "storageprojArn": {
+      "Type": "String",
+      "Default": "storageprojArn"
+    },
+    "storageprojStreamArn": {
+      "Type": "String",
+      "Default": "storageprojArn"
     }
   },
   "Conditions": {
@@ -213,13 +225,13 @@
         }
       }
     },
-    "projectsTableNewFunctionTriggerPolicy": {
+    "projTriggerPolicy": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "lambda-trigger-policy-projectsTableNewFunction",
+        "PolicyName": "lambda-trigger-policy-proj",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -238,7 +250,7 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storageprojectsTableNewFunctionStreamArn"
+                  "Ref": "storageprojStreamArn"
                 }
               ]
             }
@@ -246,16 +258,16 @@
         }
       }
     },
-    "projectsTableNewFunctionTrigger": {
+    "projTrigger": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "projectsTableNewFunctionTriggerPolicy"
+        "projTriggerPolicy"
       ],
       "Properties": {
         "BatchSize": 100,
         "Enabled": true,
         "EventSourceArn": {
-          "Ref": "storageprojectsTableNewFunctionStreamArn"
+          "Ref": "storageprojStreamArn"
         },
         "FunctionName": {
           "Fn::GetAtt": [

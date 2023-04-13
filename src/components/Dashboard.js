@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchAllSensorData, getSensorData } from '../services/sensorData.service';
+import { getProjects } from '../services/project.service';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 import Home from './Home';

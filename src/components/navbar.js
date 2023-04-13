@@ -8,6 +8,8 @@ import AddProject from './project/addProject';
 import ListProjects from './project/listProject';
 import Home from './Home';
 import NodeComponent from './node/NodeComponent';
+import ProjectUpdateForm from './project/updateProject';
+import './navbar.css';
 
 // import './navbar.css';
 

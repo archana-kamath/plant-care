@@ -140,6 +140,15 @@
           ],
           "category": "storage",
           "resourceName": "projectsTableNewFunction"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "proj"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -284,6 +293,10 @@
   },
   "storage": {
     "node": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "proj": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     },
