@@ -17,15 +17,15 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "projectsTable";
+let tableName = "project";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
 
 const userIdPresent = false; // TODO: update in case is required to use that definition
-const partitionKeyName = "username";
+const partitionKeyName = "project_id";
 const partitionKeyType = "S";
-const sortKeyName = "proj_name";
+const sortKeyName = "user_id";
 const sortKeyType = "S";
 const hasSortKey = sortKeyName !== "";
 const path = "/projects";
@@ -55,31 +55,28 @@ const convertUrlType = (param, type) => {
   }
 }
 
-// Define the API endpoint to retrieve table entries for a particular user
-// Define a route to retrieve items based on partition key
-app.get(path +'/all', (req, res) => {
+// API to retrieve projects for logged in user
+app.get(path+'/listproj',(req,res) => {
+  let params={
+    TableName: tableName,
+    IndexName: "user_id-project_id-index",
+    KeyConditionExpression: "user_id = :user_id",
+    ExpressionAttributeValues:{
+      ":user_id": req.query.name,
+    }
+  }
 
-  let qparams = {
-    ExpressionAttributeValues: {
-      ":uname": req.query.name
-    },
-    
-    KeyConditionExpression: "username = :uname",
-    TableName: tableName
-  };
-  // res.send(`Query parameters: ${JSON.stringify(qparams)}`);
-
-  // Query DynamoDB using the partition key from the request params
-  dynamodb.query(qparams, (err, data) => {
+  dynamodb.query(params, (err, data) => {
     if (err) {
       console.error(err);
-      res.status(500).send(`Error retrieving items from DynamoDB: username=${qparams}, tableName=${qparams.TableName}, error=${err}`);
+      res.status(500).send(`Error retrieving items from DynamoDB: username=${req.query.name}, tableName=${params.TableName}, error=${err}`);
     } else {
       console.log(data);
       res.json(data.Items);
     }
   });
-});
+})
+
 
 
 /********************************
@@ -120,28 +117,6 @@ app.get(path + hashKeyPath, function(req, res) {
  
 });
 
-// // Route to fetch all projects from the DynamoDB table
-// app.get('/projects/all', (req, res) => {
-//   // const userId = req.query.user_id;
-//   console.log("user Id from frontend is ",userId);
-//   const params = {
-//     TableName: tableName,
-//   //   KeyConditionExpression: 'user_id = :userid',
-//   //   ExpressionAttributeValues: {
-//   //   ':userid': userId,
-//   // },
-//   };
-
-//   dynamodb.scan(params, (err, data) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).send('Error fetching items from database');
-//     } else {
-//       res.json(data.Items);
-//       // res.status(200).send(data.Items);
-//     }
-//   });
-// });
 
 /*****************************************
  * HTTP Get method for get single object *
@@ -240,28 +215,6 @@ app.post(path, function(req, res) {
 /**************************************
 * HTTP remove method to delete object *
 ***************************************/
-app.delete(path+'/delete' , (req, res) => {
-
-  let qparams = {
-    Key: {
-      'username': { S: req.query.uname },
-      'proj_name': { S: req.query.proj_name }
-    },
-    TableName: tableName
-  };
-  // res.send(`Query parameters: ${JSON.stringify(qparams)}`);
-
-  // Query DynamoDB using the partition key from the request params
-  dynamodb.deleteItem(qparams, (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send(`Error retrieving items from DynamoDB: username=${qparams}, tableName=${qparams.TableName}, error=${err}`);
-    } else {
-      console.log("item deleted successulyy");
-      
-    }
-  });
-});
 
 app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   const params = {};
