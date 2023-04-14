@@ -10,7 +10,5 @@
     "fieldType": "string"
   },
   "gsi": [],
-  "triggerFunctions": [
-    "projectsLambdaFnc"
-  ]
+  "triggerFunctions": []
 }
