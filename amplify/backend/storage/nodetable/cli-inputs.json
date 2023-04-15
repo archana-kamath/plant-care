@@ -1,0 +1,29 @@
+{
+  "resourceName": "nodetable",
+  "tableName": "nodetable",
+  "partitionKey": {
+    "fieldName": "node_id",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "project_id",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "node_gsi",
+      "partitionKey": {
+        "fieldName": "project_id",
+        "fieldType": "string"
+      },
+      "sortKey": {
+        "fieldName": "node_id",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": [
+    "nodetableTriggerfeecee7b",
+    "nodetableTrigger366926bb"
+  ]
+}

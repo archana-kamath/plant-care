@@ -45,7 +45,7 @@ function App({ user }) {
             <Route path="/addproj" element={<AddProject />} />
             <Route path="/listproj" element={<ListProjects />} />
             <Route path="/updateproj" element={<ProjectUpdateForm/>}/>
-            <Route path="/node" element={<NodeComponent />} />
+            <Route path="/node/:id" element={<NodeComponent />} />
             <Route exact path="/profile" element={<Profile/>}/>
           </Routes>
         </BrowserRouter>

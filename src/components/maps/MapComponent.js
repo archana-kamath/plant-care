@@ -49,16 +49,20 @@ class MapComponent extends Component {
 
     componentDidMount(props){
 
-        this.setState({
-           userId: this.props.myPropUserId
-        })
-        this.setState({
-            projectId: this.props.myPropProjectId
-        })
-
-         axios.get(urls.backendURL+'/node/add').then(response => response.data).then((data) => {
-             this.setState({ nodeList: data})
-           }).catch((err) => console.log(err));
+        axios.get(urls.backendURL+'/node/listNode', {
+            params:{
+                name: window.location.href.split('/')[4]
+            }
+          })
+          .then(response => response.data)
+          .then((data) => {
+          console.log('Nodes of given project id', data);
+          this.setState({ nodeList: data})
+          })
+          .catch(err => {
+          console.log('Error while fetching nodes based on project id');
+          console.log(err);
+          });  
          
     }
 
@@ -68,11 +72,10 @@ class MapComponent extends Component {
         {/* <h4>Map Component</h4>
         <h5>Latitude:{this.state.lat}</h5>
         <h5>Longitude:{this.state.lng}</h5> */}
-        <LoadScript
-            googleMapsApiKey=""
-        >
-       
-       <GoogleMap
+        
+    
+        <LoadScript googleMapsApiKey="">
+        <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={10}
@@ -103,6 +106,7 @@ class MapComponent extends Component {
                     >
                     <div>
                         <h6>Node ID : {this.state.selected.node_id}</h6>
+                        <h6>Plant Type : {this.state.selected.plant_type}</h6>
                         <h6>Moisture Threshold : {this.state.selected.moisture_threshold}</h6>
                         <h6>Tempertature Threshold : {this.state.selected.temperature_threshold}</h6>
                         <h6>Humidity Threshold : {this.state.selected.humidity_threshold}</h6>

@@ -88,7 +88,7 @@ export default function ListProjects() {
 
   //Navigate to Node Component
   function handleNodeClick(project_id){
-    navigate('/node', { state: project_id });
+    navigate('/node/'+project_id, { state: project_id });  
   }
 
   //Update function
