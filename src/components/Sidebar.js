@@ -11,9 +11,9 @@ export default function Sidebar() {
                 <a className="menu-item" href="/listproj">
                     Project
                 </a>
-                <a className="menu-item" href="/node">
+                {/* <a className="menu-item" href="/node">
                     Node
-                </a>
+                </a> */}
         </Menu>
     );
 };

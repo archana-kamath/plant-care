@@ -15,13 +15,6 @@
         "setting": "open"
       }
     },
-    "/node/add": {
-      "name": "/node/add",
-      "lambdaFunction": "nodeLambdaFnc",
-      "permissions": {
-        "setting": "open"
-      }
-    },
     "/projects/add": {
       "name": "/projects/add",
       "lambdaFunction": "addProject",
@@ -32,6 +25,13 @@
     "/projects": {
       "name": "/projects",
       "lambdaFunction": "projectsLambdaFnc",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/node": {
+      "name": "/node",
+      "lambdaFunction": "nodeLambdaFnc",
       "permissions": {
         "setting": "open"
       }

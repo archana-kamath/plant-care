@@ -13,7 +13,7 @@ class NodeComponent extends Component {
 
        this.state ={
             userId:'',
-            projectId:'project1',
+            projectId:'',
             nodeId:'',
             plantType:'',
             moistureThreshold:'',
@@ -36,10 +36,26 @@ class NodeComponent extends Component {
     }
 
     componentDidMount(){
-      axios.get(urls.backendURL+'/node/add').then(response => response.data).then((data) => {
-        console.log(data.response)
-        this.setState({ allNodes: data})
-      }).catch((err) => console.log(err));
+
+        var url = window.location.href
+        var projectId = url.split('/');
+        console.log(projectId[4])
+        this.setState({projectId: projectId[4]})
+
+        axios.get(urls.backendURL+'/node/listNode', {
+            params:{
+                name: projectId[4]
+            }
+          })
+          .then(response => response.data)
+          .then((data) => {
+          console.log('Nodes of given project id', data);
+          this.setState({ allNodes: data})
+          })
+          .catch(err => {
+          console.log('Error while fetching nodes based on project id');
+          console.log(err);
+          });    
     }
 
     handleCallback = (childData1,childData2) =>{
@@ -122,7 +138,7 @@ class NodeComponent extends Component {
         longitude:this.state.longitude
       }
 
-      axios.post(urls.backendURL+'/node/add',nodeReq).then(response => response.data).then((data) => {
+      axios.post(urls.backendURL+'/node',nodeReq).then(response => response.data).then((data) => {
       console.log(data.response)
       console.log(JSON.stringify(data))
       this.setState({
@@ -138,19 +154,47 @@ class NodeComponent extends Component {
        })
     }).catch((err) => console.log(err));;
 
+    var url = window.location.href
+    var projectId = url.split('/');
+    console.log(projectId[4])
+    this.setState({projectId: projectId[4]})
+
+    axios.get(urls.backendURL+'/node/listNode', {
+      params:{
+          name: projectId[4]
+      }
+    })
+    .then(response => response.data)
+    .then((data) => {
+    console.log('Nodes of given project id', data);
+    this.setState({ allNodes: data})
+    })
+    .catch(err => {
+    console.log('Error while fetching nodes based on project id');
+    console.log(err);
+    });  
+
   }
   onViewAllNodes = (event) => {
-    event.preventDefault();
+    var url = window.location.href
+    var projectId = url.split('/');
+    console.log(projectId[4])
+    this.setState({projectId: projectId[4]})
 
-    axios.get(urls.backendURL+'/node/add')
-    .then(response => 
-      response.data
-      //console.log("response "+response)
-    )
+    axios.get(urls.backendURL+'/node/listNode', {
+      params:{
+          name: projectId[4]
+      }
+    })
+    .then(response => response.data)
     .then((data) => {
-     // console.log("data "+ JSON.stringify(data))
-      this.setState({ allNodes: data})
-    }).catch((err) => console.log(err));
+    console.log('Nodes of given project id', data);
+    this.setState({ allNodes: data})
+    })
+    .catch(err => {
+    console.log('Error while fetching nodes based on project id');
+    console.log(err);
+    });  
   }
 
   onNodeDeletion = (event) => {
@@ -159,24 +203,23 @@ class NodeComponent extends Component {
     console.log(this.state.selectedNodes)
     this.state.selectedNodes.map(node => 
     {
-	   axios.delete(urls.backendURL+'/node/add/object/'+node).then(response => response.data).then((data) => {
+	   axios.delete(urls.backendURL+'/node/object/'+node+'/'+this.state.projectId).then(response => response.data).then((data) => {
        console.log(data.response)
      })
 	  }).catch((err) => console.log(err));
     this.setState({
       selectedNodes:[]
     })
-
-    axios.get(urls.backendURL+'/node/add').then(response => response.data).then((data) => {
-      console.log(data.response)
-      this.setState({ allNodes: data})
-    }).catch((err) => console.log(err));;
   }
 
   onGoogleMaps= (event) => {
-    event.preventDefault();
-    console.log(this.state.selectedNodes)
-    event.preventDefault();
+    var url = window.location.href
+    var projectId = url.split('/');
+    console.log(projectId[4])
+    this.setState({projectId: projectId[4]})
+
+    window.location.reload(false);
+
   }
 
   render() {
@@ -186,7 +229,6 @@ class NodeComponent extends Component {
           <Row>
             <Col>
             <Card style={{ width: '20rem'}}><Card.Body>
-            <h4>Node : {this.state.projectId}</h4>
 
             <Form.Control type="text" value={this.state.plantType}
             placeholder="Plant Type" onChange={this.handlePlantTypeChange}/>
@@ -219,10 +261,10 @@ class NodeComponent extends Component {
             </Col><Col>
             <Card>
               <Card.Body>
+              <h5>Project Id : {this.state.projectId}</h5>
                 <MapComponent 
                       parentCallback = {this.handleCallback}
-                      myPropUserId={this.state.userId}
-                      myPropProjectId={this.state.projectId}>
+                      myPropProjectId={window.location.href.split('/')[4]}>
                 </MapComponent>
               </Card.Body>
             </Card>
@@ -231,11 +273,14 @@ class NodeComponent extends Component {
             <Row>
             <Card><Card.Body>
             {(this.state.allNodes.length === 0) ? (
-				<div></div>
+				<div>
+            <Button  onClick={this.onViewAllNodes} variant="dark">Reload Table</Button>
+        </div>
 			   ):(
         <div>
           <Table>
-            {this.state.allNodes.length ===0?(<div></div>):(
+            {this.state.allNodes.length ===0?(<div>
+            </div>):(
               <thead className="thead-dark">
               <tr><th>Node ID</th><th>Project ID</th>
               <th>Plant Type</th><th>Moisture Threshold</th>

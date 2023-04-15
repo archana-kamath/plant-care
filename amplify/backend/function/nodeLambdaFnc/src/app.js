@@ -17,7 +17,7 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "node";
+let tableName = "nodetable";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
@@ -25,15 +25,13 @@ if (process.env.ENV && process.env.ENV !== "NONE") {
 const userIdPresent = false; // TODO: update in case is required to use that definition
 const partitionKeyName = "node_id";
 const partitionKeyType = "S";
-const sortKeyName = "";
-const sortKeyType = "";
+const sortKeyName = "project_id";
+const sortKeyType = "S";
 const hasSortKey = sortKeyName !== "";
-const path = "/node/add";
+const path = "/node";
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
-const user_path = '/:' + "user_id";
-const user_id = "user_id";
 
 // declare a new express app
 const app = express()
@@ -56,27 +54,36 @@ const convertUrlType = (param, type) => {
       return param;
   }
 }
+
+// Get list of nodes for a given project id
+app.get(path+'/listNode',(req,res) => {
+  let params={
+    TableName: tableName,
+    IndexName: "node_gsi",
+    KeyConditionExpression: "project_id = :project_id",
+    ExpressionAttributeValues:{
+      ":project_id": req.query.name,
+    }
+  }
+
+  dynamodb.query(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(`Error retrieving items from DynamoDB: project id =${req.query.name}, tableName=${params.TableName}, error=${err}`);
+    } else {
+      console.log(data);
+      res.json(data.Items);
+    }
+  });
+})
+
+
 /********************************
  * HTTP Get method for list all nodes using user id *
  ********************************/
 
 app.get(path, function(req, res) {
-  const condition = {}
-  condition[user_id] = {
-    ComparisonOperator: 'EQ'
-  }
-
-  if (userIdPresent && req.apiGateway) {
-    condition[user_id]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-  } else {
-    try {
-      condition[user_id]['AttributeValueList'] = [ convertUrlType(req.params[user_id], partitionKeyType) ];
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-
+  
   let queryParams = {
     TableName: tableName
   }
@@ -215,7 +222,7 @@ app.post(path, function(req, res) {
       res.statusCode = 500;
       res.json({error: err, url: req.url, body: req.body});
     } else {
-      res.json({success: 'Node added!', url: req.url, data: data})
+      res.json({success: 'Node added!!', url: req.url, data: data})
     }
   });
 });

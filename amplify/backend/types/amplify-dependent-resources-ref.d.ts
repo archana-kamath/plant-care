@@ -62,12 +62,14 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
-    "node": {
+    "nodetable": {
       "Arn": "string",
       "Name": "string",
       "PartitionKeyName": "string",
       "PartitionKeyType": "string",
       "Region": "string",
+      "SortKeyName": "string",
+      "SortKeyType": "string",
       "StreamArn": "string"
     },
     "proj": {
