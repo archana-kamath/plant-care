@@ -41,7 +41,6 @@ async function getUserProjects()
      element.nodeDetail = nodeDetails;
     }
     return projectsList;
-
 }
 
 function Dashboard() {
@@ -51,6 +50,7 @@ function Dashboard() {
   const [moist, setMoisture] = useState([]);
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
   const [cData, setCdata] = useState([]);
+  const [node, setNode] = useState([]);
   const [projects, setProjects] = useState([]);
   getUserProjects().then((projectsList) => {
     setProjects(projectsList);
@@ -58,8 +58,6 @@ function Dashboard() {
   
 
   useInterval(async () => {
-    var d = await getSensorData('11-2022');
-    console.log('D:', d);
     var data = await fetchAllSensorData();
     console.log('Data:', data);
     for (var i in data) {
@@ -69,6 +67,7 @@ function Dashboard() {
       var temperature = parseInt(data[i]['temperature']);
       var humidity = parseInt(data[i]['humidity']);
       var moisture = parseInt(data[i]['moisture']);
+      node.push(data[i]['node']);
     }
 
     setTime(time => [...time, timeFormat]);
@@ -76,12 +75,29 @@ function Dashboard() {
     setHumidity(humid => [...humid, humidity]);
     setMoisture(moist => [...moist, moisture]);
     setCdata(data);
+    setNode(new Set(node));
     let projectsList = await getUserProjects();
     setProjects(projectsList);
-
   }, 5000);
 
   console.log('setData', cData);
+
+  const [filteredNodeData, setFilteredNodeData] = useState([]);
+
+    const onDropdownSelected = (e) =>{
+        const selectedNode = e.target.value;
+        console.log('FilteredNode', selectedNode);
+        const filteredNodes = [];
+        const extractNodeData=cData.map(
+            (x)=>{ 
+                if(x.node === selectedNode) {
+                    filteredNodes.push(x)
+                }
+            }
+        )
+        setFilteredNodeData(filteredNodes)
+    };
+    console.log('....here', filteredNodeData);
 
   const time1 = [];
   const temp1 = [];
@@ -161,77 +177,72 @@ function Dashboard() {
  
   const chart = () => {
     setChartData({
-      labels: dates,
+      labels: time1,
       datasets: [
         {
           label: "Temperature(°C)",
-          data: temp2,
+          data: temp1,
         },
         {
           label: "Humidity(%)",
-          data: humid2,
+          data: humid1,
         },
         {
           label: "Moisture(VWC)",
-          data: moist2,
+          data: moist1,
         },
       ],
-      options: {
+      options : {
         responsive: true,
-        scales: {
-          y: {
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 10,
-              beginAtZero: true,
+            scales: {
+            y: {
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 10,
+                    beginAtZero: true,
+                },
+                gridLines: {
+                    display: false,
+                },
             },
-            gridLines: {
-              display: false,
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 1000,
+                },
+                gridLines: {
+                    display: true,
+                },
             },
-          },
-          x: {
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 1000,
             },
-            gridLines: {
-              display: false,
+            pan: {
+                enabled: true,
+                mode: "xy",
+                speed: 1,
+                threshold: 1,
             },
-            type: 'time',
-            time: {
-              units: 'hours'
+            zoom: {
+                enabled: true,
+                drag: true,
+                mode: "xy",
+                limits: {
+                    max: 1,
+                    min: 0.5,
             },
-            min: '2022-11-01',
-            max: '2022-12-31',
-          },
-        },
-        pan: {
-          enabled: true,
-          mode: "xy",
-          speed: 1,
-          threshold: 1,
-        },
-        zoom: {
-          enabled: true,
-          drag: true,
-          mode: "xy",
-          limits: {
-            max: 1,
-            min: 0.5,
-          },
-          rangeMin: {
-            x: 2,
-            y: 1,
-          },
-          rangeMax: {
-            x: 1,
-            y: 1000,
-          },
+            rangeMin: {
+                x: 2,
+                y: 1,
+            },
+            rangeMax: {
+                x: 1,
+                y: 1000,
+            },
         },
 
-      },
-    });
-  };
+  },
+});
+};
+
 
 
   useInterval(() => {
@@ -259,8 +270,8 @@ function Dashboard() {
                     </div>
                     <Speedometer id="speedometer" value={humid.at(-1)} title="Soil Moisture" />
                     <div className="sameRow">
-                      <Barometer id="dial9" value="40" title="Humidity" />
-                      <Temperature id="dial8" value="40" title="Recorded Temperature" />
+                      <Barometer id="dial9" value={moist.at(-1)} title="Humidity" />
+                      <Temperature id="dial8" value={temp.at(-1)} title="Recorded Temperature" />
                     </div>
                   </div>)}
                 </Carousel>
@@ -273,15 +284,19 @@ function Dashboard() {
           <MDBCol md='4'>
           <MDBCard>
             <MDBCardBody>
+            <Grid>
               <Line
                 data={chartData}
               />
+            </Grid>
+              <select onChange={onDropdownSelected}>
+                    <option>Select a Node</option>
+                    {Array.from(node).map((n) => (<option value={n}>{n}</option>))}
+                </select>
               <div>
                 <input type="date" ref={sdate} />
                 <input type="date" ref={edate} />
                 <button onClick={filterData}>Filter</button>
-                {/* <br/>
-          <input type="month" onChange={filterMonth}/> */}
               </div>
             </MDBCardBody>
           </MDBCard>
@@ -289,6 +304,9 @@ function Dashboard() {
         </MDBRow>
 
       </div>);
+  }
+  else {
+    return(<div>Please Add a project</div>)
   }
 
 
