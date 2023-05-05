@@ -52,9 +52,9 @@ function Dashboard() {
   const [cData, setCdata] = useState([]);
   const [node, setNode] = useState([]);
   const [projects, setProjects] = useState([]);
-  getUserProjects().then((projectsList) => {
-    setProjects(projectsList);
-  });
+//   getUserProjects().then((projectsList) => {
+//     setProjects(projectsList);
+//   });
   
 
   useInterval(async () => {
@@ -123,7 +123,7 @@ function Dashboard() {
   const sdate = useRef();
   const edate = useRef();
 
-  const extractData = cData.map(
+  const extractData = filteredNodeData.map(
     (a) => {
       let x = new Date(a.time);
       x = String(x).split('GMT')[0];
