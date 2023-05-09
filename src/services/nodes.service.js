@@ -9,7 +9,7 @@ export async function getNodesPerProjects(project_id) {
     })
         .then(response => response.data)
         .then((data) => {
-            console.log('Nodes of given project id', data);
+            //console.log('Nodes of given project id', data);
             return data;
         })
         .catch(err => {

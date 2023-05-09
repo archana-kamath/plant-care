@@ -7,10 +7,10 @@ const styles = {
     width: `50%`,
     height: `auto`,
     color: "#000",
-    border: "10px solid #fff",
     padding: "2px"
   },
   title: {
+    fontFamily:"serif",
     fontSize: "1em",
     color: "#000",
     marginTop: "10px"
