@@ -256,7 +256,7 @@ function Dashboard2() {
             <Card.Body style={{display:'flex', justifyContent:'space-evenly'}}>
             <Card.Text >
             <Temperature value={temp1.at(-1)} title="Temperature"/> </Card.Text>
-            <Card.Text style={{ width: 200, height: 200}}>
+            <Card.Text style={{ width: 175, height: 175}}>
            <CircularProgressbar
             value={t1}
             text={`${t1}%`}
@@ -277,7 +277,7 @@ function Dashboard2() {
             Humidity</Card.Title>
             <Card.Body style={{display:'flex', justifyContent:'space-evenly'}}>
             <Card.Text><Barometer id="dial9" value={humid1.at(-1)} title="Humidity" /></Card.Text>
-            <Card.Text style={{ width: 200, height: 200 }}>
+            <Card.Text style={{ width: 175, height: 175 }}>
             <CircularProgressbar
             value={h1}
             text={`${h1}%`}
