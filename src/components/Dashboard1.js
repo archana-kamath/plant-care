@@ -98,12 +98,13 @@ function Dashboard2() {
         <div style={{backgroundColor:'#f2f2f2'}}>
             <Grid  container spacing={{ xs:2 , md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 <SideMenu/>
-                <Grid  item xs={2} sm={2} md={3}>
+                <div style={{marginLeft:'290px', display:'flex', position:'relative'}}>
+                <Grid  item xs={4}>
                 <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Farm</Card.Title>
                 <Card.Img style={{ width:'6em', float:'left'}} src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/95/null/external-farm-farm-flaticons-lineal-color-flat-icons-2.png"></Card.Img>
-                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative',marginRight:'20px', float:'right'}}>{proj_type.farm.length}</Card.Subtitle>
+                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative', marginLeft:'20px',float:'right'}}>{proj_type.farm.length}</Card.Subtitle>
                     <Dropdown className='dropdownNew' title="Select a Farm Project">
                 {(nodelist_farm).map(([key,value]) => 
                     (<Dropdown.Item >{key}
@@ -118,13 +119,13 @@ function Dashboard2() {
                </Card.Body>
                 </Card>
                 </Grid>
-                <Grid item xs={2} sm={2} md={3}>
+                <Grid item xs={3}>
                 <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Office</Card.Title>
                 <Card.Img style={{ width:'6em', float:'left'}}  src="https://img.icons8.com/external-flaticons-flat-flat-icons/100/null/external-office-wayfinding-flaticons-flat-flat-icons-2.png"></Card.Img>
-                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative',marginRight:'20px', float:'right'}}>{proj_type.office.length}</Card.Subtitle>
-            <Dropdown className='dropdownNew' title="Select a Office Project">
+                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative', float:'right'}}>{proj_type.office.length}</Card.Subtitle>
+            <Dropdown className='dropdownNew' title="Select an Office Project">
                 {(nodelist_office).map(([key,value]) => 
                     (<Dropdown.Item >{key}
                         <Dropdown.Submenu >
@@ -138,12 +139,12 @@ function Dashboard2() {
             </Card.Body>
             </Card>
             </Grid>
-            <Grid item xs={2} sm={2} md={3}>
+            <Grid item xs={4}>
             <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Home</Card.Title>
                 <Card.Img style={{ width:'6em', float:'left'}} src="https://img.icons8.com/bubbles/100/null/home.png"></Card.Img>
-                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative',marginRight:'20px', float:'right'}}>{proj_type.home.length}</Card.Subtitle>
+                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative', float:'right'}}>{proj_type.home.length}</Card.Subtitle>
                 <Dropdown className='dropdownNew' title="Select a Home Project">
                 {(nodelist_home).map(([key,value]) => 
                     (<Dropdown.Item >{key}
@@ -158,6 +159,7 @@ function Dashboard2() {
             </Card.Body>
             </Card>
             </Grid>
+            </div>
             </Grid>
         </div>
     )
