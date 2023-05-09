@@ -13,6 +13,7 @@ const styles = {
       color: "#000", 
       marginTop: "10px",
       display: "flex",
+      marginLeft:'70px'
     }
   };
 

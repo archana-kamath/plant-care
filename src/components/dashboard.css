@@ -28,20 +28,6 @@ title {
   margin-left: 20rem;
 }
 
-.typeCard {
-  /* background: linear-gradient(
-    to right,
-    var(--amplify-colors-green-80),
-    var(--amplify-colors-orange-40)
-  ); */
-  /* background-color:blanchedalmond;
-  border-width: 20em;
-  width:30rem; 
-  border-radius: 2.5rem;
-  position: relative;
-  display: flex; */
-}
-
 .cardTitle {
   margin-left: 4em;
 }

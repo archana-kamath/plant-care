@@ -13,7 +13,7 @@ const styles = {
     fontFamily:"serif",
     fontSize: "1em",
     color: "#000",
-    marginTop: "10px"
+    marginTop: "10px",
   }
 };
 
