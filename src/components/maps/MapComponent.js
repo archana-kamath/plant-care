@@ -69,12 +69,8 @@ class MapComponent extends Component {
   render() {
     return (
         <Container fluid>
-        {/* <h4>Map Component</h4>
-        <h5>Latitude:{this.state.lat}</h5>
-        <h5>Longitude:{this.state.lng}</h5> */}
-        
     
-        <LoadScript googleMapsApiKey="">
+        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}

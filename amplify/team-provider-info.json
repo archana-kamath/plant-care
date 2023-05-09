@@ -40,7 +40,8 @@
         "nodeLambdaFnc": {
           "deploymentBucketName": "amplify-sensordashboardproje-dev-104828-deployment",
           "s3Key": "amplify-builds/nodeLambdaFnc-37517a594d36652b7874-build.zip"
-        }
+        },
+        "secretLambdaFnc": {}
       },
       "storage": {
         "user": {},
