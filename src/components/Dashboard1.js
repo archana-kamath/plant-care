@@ -8,6 +8,8 @@ import { getNodesPerProjects } from '../services/nodes.service';
 import { Auth } from 'aws-amplify';
 import Dropdown from 'react-multilevel-dropdown';
 import Card from 'react-bootstrap/Card';
+import SideMenu from './SideMenu';
+
 
 async function getUserProjects()
 {
@@ -93,10 +95,11 @@ function Dashboard2() {
     };
 
     return(
-        <div>
-            <Grid className='grid' container spacing={{ xs:2 , md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        <div style={{backgroundColor:'#f2f2f2'}}>
+            <Grid  container spacing={{ xs:2 , md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                <SideMenu/>
                 <Grid  item xs={2} sm={2} md={3}>
-                <Card className= "meters" style ={{backgroundColor:'blanchedalmond', borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
+                <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Farm</Card.Title>
                 <Card.Img style={{ width:'6em', float:'left'}} src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/95/null/external-farm-farm-flaticons-lineal-color-flat-icons-2.png"></Card.Img>
@@ -116,7 +119,7 @@ function Dashboard2() {
                 </Card>
                 </Grid>
                 <Grid item xs={2} sm={2} md={3}>
-                <Card className= "meters" style ={{backgroundColor:'blanchedalmond', borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
+                <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Office</Card.Title>
                 <Card.Img style={{ width:'6em', float:'left'}}  src="https://img.icons8.com/external-flaticons-flat-flat-icons/100/null/external-office-wayfinding-flaticons-flat-flat-icons-2.png"></Card.Img>
@@ -136,7 +139,7 @@ function Dashboard2() {
             </Card>
             </Grid>
             <Grid item xs={2} sm={2} md={3}>
-            <Card className= "meters" style ={{backgroundColor:'blanchedalmond', borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
+            <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Home</Card.Title>
                 <Card.Img style={{ width:'6em', float:'left'}} src="https://img.icons8.com/bubbles/100/null/home.png"></Card.Img>

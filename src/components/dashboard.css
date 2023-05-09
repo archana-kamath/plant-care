@@ -1,19 +1,19 @@
 title {
   color: black;
-  float:left;
-  margin: 25px;
+  margin-bottom:'50px';
 }
 
 .signout {
   position: relative;
-  background-color: rgb(216, 175, 71);
+  background-color: black;
   font-weight:bold;
-  color:rgb(84, 82, 82);
+  color:#f2f2f2;
   border-radius: 1em;
   width: 6em;
   height: 3em;
   left: 35em;
   bottom: 4em;
+  
 }
 
 .amplify-button[data-variation='primary'] {
@@ -26,6 +26,20 @@ title {
 
 .grid {
   margin-left: 20rem;
+}
+
+.typeCard {
+  /* background: linear-gradient(
+    to right,
+    var(--amplify-colors-green-80),
+    var(--amplify-colors-orange-40)
+  ); */
+  /* background-color:blanchedalmond;
+  border-width: 20em;
+  width:30rem; 
+  border-radius: 2.5rem;
+  position: relative;
+  display: flex; */
 }
 
 .cardTitle {
