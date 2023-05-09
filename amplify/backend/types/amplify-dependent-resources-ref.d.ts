@@ -18,13 +18,6 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "nodeLambdaFnc": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string",
-            "LambdaExecutionRoleArn": "string"
-        },
         "projectsLambdaFnc": {
             "Name": "string",
             "Arn": "string",
@@ -59,17 +52,16 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string",
             "LambdaExecutionRoleArn": "string"
+        },
+        "nodeLambdaFnc": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string",
+            "LambdaExecutionRoleArn": "string"
         }
     },
     "storage": {
-        "node": {
-            "Name": "string",
-            "Arn": "string",
-            "StreamArn": "string",
-            "PartitionKeyName": "string",
-            "PartitionKeyType": "string",
-            "Region": "string"
-        },
         "projects": {
             "Name": "string",
             "Arn": "string",
@@ -95,6 +87,26 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string"
         },
         "projectsTableNewFunction": {
+            "Name": "string",
+            "Arn": "string",
+            "StreamArn": "string",
+            "PartitionKeyName": "string",
+            "PartitionKeyType": "string",
+            "SortKeyName": "string",
+            "SortKeyType": "string",
+            "Region": "string"
+        },
+        "proj": {
+            "Name": "string",
+            "Arn": "string",
+            "StreamArn": "string",
+            "PartitionKeyName": "string",
+            "PartitionKeyType": "string",
+            "SortKeyName": "string",
+            "SortKeyType": "string",
+            "Region": "string"
+        },
+        "nodetable": {
             "Name": "string",
             "Arn": "string",
             "StreamArn": "string",

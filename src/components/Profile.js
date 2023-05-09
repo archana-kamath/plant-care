@@ -6,11 +6,16 @@ import axios from 'axios'
 import urls from './utils';
 import './styles/profile.css';
 import avatar from './styles/avatar.jpeg';
+import { Auth } from 'aws-amplify';
 
 
 function Profile() {
-    const [data, setData] = useState();
-    const [id, setId] = useState('aakanksha');
+    const [id, setId] = useState();
+    ;(async () => {
+        const currUser = await Auth.currentAuthenticatedUser();
+        console.log(currUser);
+        setId(currUser.username);
+      })()
     const [fname, setFname] = useState();
     const [lname, setLname] = useState();
     const [email, setEmail] = useState();
@@ -53,6 +58,12 @@ function Profile() {
             <br/>
             <Row>
                 <Col><b>Contact:</b> {contact} </Col>
+            </Row>
+            <br/>
+            <Row>
+                <Col>           
+                    <button style={{margin:'10px', backgroundColor:'#f2f2f2', borderRadius:'0.5em', color:'black', padding:'5px'}}><b>Edit Profile</b></button>
+                </Col>
             </Row>
         </Container>
         </div>

@@ -1,7 +1,9 @@
 import { Authenticator } from '@aws-amplify/ui-react';
 import { Auth } from 'aws-amplify';
-import Dashboard from './Dashboard';
+import Dashboard1 from './Dashboard1';
+import Dashboard2 from './Dashboard2';
 import './dashboard.css';
+
 
 const formFields = {
     signUp: {
@@ -36,13 +38,15 @@ const formFields = {
           ]}>
         {({ signOut, user }) => (
           <main>
-            {/* <div>
-                <h1 className='title'>Hello {user.username}</h1>
+            <div>
+                <h5 className='title' style={{float:'right', marginRight:'51px', top:'20px'}}>{user.username}</h5>
                 <button className='signout' onClick={ signOut }>Log Out</button>
-            </div> */}
-            {/* <div> */}
-                <Dashboard/>
-            {/* </div> */}
+
+            </div>
+              <Dashboard1/>
+              <Dashboard2/>
+              
+                {/* <Dashboard/> */}
           </main>
         )}
         </Authenticator>

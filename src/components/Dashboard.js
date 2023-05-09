@@ -22,11 +22,26 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardBody,
-  MDBCardGroup,
   MDBRow,
   MDBCol,
 } from 'mdb-react-ui-kit';
+import { getNodesPerProjects } from '../services/nodes.service';
+import { Auth } from 'aws-amplify';
+
 Chart.register(...registerables);
+
+async function getUserProjects()
+{
+  const user = await Auth.currentAuthenticatedUser();
+    // get User Projects.. 
+    let projectsList = await getProjects(user.username);
+    for (const element of projectsList)
+    {
+     let nodeDetails = await getNodesPerProjects(element.project_id);
+     element.nodeDetail = nodeDetails;
+    }
+    return projectsList;
+}
 
 function Dashboard() {
   const [time, setTime] = useState([]);
@@ -35,10 +50,14 @@ function Dashboard() {
   const [moist, setMoisture] = useState([]);
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
   const [cData, setCdata] = useState([]);
+  const [node, setNode] = useState([]);
+  const [projects, setProjects] = useState([]);
+//   getUserProjects().then((projectsList) => {
+//     setProjects(projectsList);
+//   });
+  
 
   useInterval(async () => {
-    var d = await getSensorData('11-2022');
-    console.log('D:', d);
     var data = await fetchAllSensorData();
     console.log('Data:', data);
     for (var i in data) {
@@ -48,6 +67,7 @@ function Dashboard() {
       var temperature = parseInt(data[i]['temperature']);
       var humidity = parseInt(data[i]['humidity']);
       var moisture = parseInt(data[i]['moisture']);
+      node.push(data[i]['node']);
     }
 
     setTime(time => [...time, timeFormat]);
@@ -55,16 +75,55 @@ function Dashboard() {
     setHumidity(humid => [...humid, humidity]);
     setMoisture(moist => [...moist, moisture]);
     setCdata(data);
-  }, 10000);
+    setNode(new Set(node));
+    let projectsList = await getUserProjects();
+    setProjects(projectsList);
+  }, 5000);
 
   console.log('setData', cData);
+
+  const [filteredNodeData, setFilteredNodeData] = useState([]);
+
+    const onDropdownSelected = (e) =>{
+        const selectedNode = e.target.value;
+        console.log('FilteredNode', selectedNode);
+        const filteredNodes = [];
+        const extractNodeData=cData.map(
+            (x)=>{ 
+                if(x.node === selectedNode) {
+                    filteredNodes.push(x)
+                }
+            }
+        )
+        setFilteredNodeData(filteredNodes)
+    };
+    console.log('....here', filteredNodeData);
 
   const time1 = [];
   const temp1 = [];
   const humid1 = [];
   const moist1 = [];
+  const temp2 = [];
+  const humid2 = [];
+  const moist2 = [];
+  const [dates, setDates] = useState();
+  const [dataPoints, setDataPoints] = useState([]);
+  const styles = {
+    card: {
+      height: `90%`,
+    },
+    title: {
+      fontSize: "1em",
+      color: "#000",
+      marginTop: "10px"
+    }
 
-  const extractData = cData.map(
+  };
+
+  const sdate = useRef();
+  const edate = useRef();
+
+  const extractData = filteredNodeData.map(
     (a) => {
       let x = new Date(a.time);
       x = String(x).split('GMT')[0];
@@ -76,21 +135,6 @@ function Dashboard() {
       )
     }
   )
-
-  // var time2 = []
-
-  // for (let i=0; i<time1.length; i++) {
-  //     time2.push(time1[i].substring(0,15))
-  // }
-
-  //console.log('Time1', time1);
-
-
-  const [dates, setDates] = useState();
-  const [dataPoints, setDataPoints] = useState([]);
-
-  const sdate = useRef();
-  const edate = useRef();
 
   const filterData = () => {
     const dates = [...time1];
@@ -121,11 +165,6 @@ function Dashboard() {
     setDates(filterDate);
     setDataPoints(filterDataPoints);
   }
-
-  const temp2 = [];
-  const humid2 = [];
-  const moist2 = [];
-
   const extractFilteredData = dataPoints.map(
     (b) => {
       return (
@@ -135,155 +174,142 @@ function Dashboard() {
       )
     }
   )
-
+ 
   const chart = () => {
     setChartData({
-      labels: dates,
+      labels: time1,
       datasets: [
         {
           label: "Temperature(°C)",
-          data: temp2,
+          data: temp1,
         },
         {
           label: "Humidity(%)",
-          data: humid2,
+          data: humid1,
         },
         {
           label: "Moisture(VWC)",
-          data: moist2,
+          data: moist1,
         },
       ],
-      options: {
+      options : {
         responsive: true,
-        scales: {
-          y: {
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 10,
-              beginAtZero: true,
+            scales: {
+            y: {
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 10,
+                    beginAtZero: true,
+                },
+                gridLines: {
+                    display: false,
+                },
             },
-            gridLines: {
-              display: false,
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 1000,
+                },
+                gridLines: {
+                    display: true,
+                },
             },
-          },
-          x: {
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 1000,
             },
-            gridLines: {
-              display: false,
+            pan: {
+                enabled: true,
+                mode: "xy",
+                speed: 1,
+                threshold: 1,
             },
-            type: 'time',
-            time: {
-              units: 'hours'
+            zoom: {
+                enabled: true,
+                drag: true,
+                mode: "xy",
+                limits: {
+                    max: 1,
+                    min: 0.5,
             },
-            min: '2022-11-01',
-            max: '2022-12-31',
-          },
-        },
-        pan: {
-          enabled: true,
-          mode: "xy",
-          speed: 1,
-          threshold: 1,
-        },
-        zoom: {
-          enabled: true,
-          drag: true,
-          mode: "xy",
-          limits: {
-            max: 1,
-            min: 0.5,
-          },
-          rangeMin: {
-            x: 2,
-            y: 1,
-          },
-          rangeMax: {
-            x: 1,
-            y: 1000,
-          },
+            rangeMin: {
+                x: 2,
+                y: 1,
+            },
+            rangeMax: {
+                x: 1,
+                y: 1000,
+            },
         },
 
-      },
-    });
-  };
+  },
+});
+};
 
-  async function getUserProjects()
-  {
-    return 2; 
-  } 
-  async function getUserNodes()
-  {
-    return 1;
-  }
-  const styles = {
-    card: {
-      height: `90%`,
-    },
-    title: {
-      fontSize: "1em",
-      color: "#000",
-      marginTop: "10px"
-    }
-   
-  };
+
 
   useInterval(() => {
     chart();
   }, 10000);
 
-  return (
-    <div>
-      <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
-        {  Array.from({ length: 2 }, (_, i) =><MDBCol>
-          <MDBCard style={styles.card}>
-            <MDBCardTitle>Project {i + 1}</MDBCardTitle>
-            {/* <MDBCardText>
-              temperature Text..
-            </MDBCardText> */}
-            <MDBCardBody>
-              <Carousel>
-                {Array.from({ length: 2 }, (_, j) =><div>
-                <div style={styles.title}>
-                 Plant {j + 1}
-                  </div>
-                  <Speedometer id="speedometer" value={humid.at(-1)} title="Soil Moisture"/>
+  if (projects.length > 0) {
+    return (
+      <div>
+        
+        <MDBRow className='row-cols-md-3'>
+        <MDBCol md='8'>
+        <MDBRow className='row-cols-md-2'>
+          {projects.map((project, i) => <MDBCol key={project.project_id}>
+            <MDBCard style={styles.card}>
+              <MDBCardTitle>Project {i + 1}</MDBCardTitle>
+              <MDBCardText>
+                {project.proj_desc}
+              </MDBCardText>
+              <MDBCardBody>
+                <Carousel>
+                  {Array.from({ length: 2 }, (_, j) => <div key={project.project_id}>
+                    <div style={styles.title}>
+                      Plant {j + 1}
+                    </div>
+                    <Speedometer id="speedometer" value={humid.at(-1)} title="Soil Moisture" />
                     <div className="sameRow">
-                  <Barometer id="dial9" value="40" title="Humidity"/>
-                  <Temperature id="dial8" value="40" title="Recorded Temperature" />
-                  </div>
-                </div>)}
-              </Carousel>
+                      <Barometer id="dial9" value={moist.at(-1)} title="Humidity" />
+                      <Temperature id="dial8" value={temp.at(-1)} title="Recorded Temperature" />
+                    </div>
+                  </div>)}
+                </Carousel>
 
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>)}
+         </MDBRow>
+          </MDBCol>
+          <MDBCol md='4'>
+          <MDBCard>
+            <MDBCardBody>
+            <Grid>
+              <Line
+                data={chartData}
+              />
+            </Grid>
+              <select onChange={onDropdownSelected}>
+                    <option>Select a Node</option>
+                    {Array.from(node).map((n) => (<option value={n}>{n}</option>))}
+                </select>
+              <div>
+                <input type="date" ref={sdate} />
+                <input type="date" ref={edate} />
+                <button onClick={filterData}>Filter</button>
+              </div>
             </MDBCardBody>
-            <MDBCardText>
-              <small className='text-muted'>Last updated 3 mins ago</small>
-            </MDBCardText>
           </MDBCard>
-        </MDBCol>)}
-        <MDBCard class="h-2">
-        <MDBCardBody>
-          <Line
-            data={chartData}
-          />
-          <div>
-            <input type="date" ref={sdate} />
-            <input type="date" ref={edate} />
-            <button onClick={filterData}>Filter</button>
-            {/* <br/>
-            <input type="month" onChange={filterMonth}/> */}
-          </div>
-        </MDBCardBody>
-        <MDBCardText>
-          <small className='text-muted'>Last updated 3 mins ago</small>
-        </MDBCardText>
-      </MDBCard>
-      </MDBRow>
-    
-  
-    </div>);
+          </MDBCol>
+        </MDBRow>
+
+      </div>);
+  }
+  else {
+    return(<div>Please Add a project</div>)
+  }
+
+
 };
 
 export default Dashboard;

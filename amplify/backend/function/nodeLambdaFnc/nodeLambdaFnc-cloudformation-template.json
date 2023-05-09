@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.7.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -16,13 +16,13 @@
     "s3Key": {
       "Type": "String"
     },
-    "storagenodeName": {
+    "storagenodetableName": {
       "Type": "String",
-      "Default": "storagenodeName"
+      "Default": "storagenodetableName"
     },
-    "storagenodeArn": {
+    "storagenodetableArn": {
       "Type": "String",
-      "Default": "storagenodeArn"
+      "Default": "storagenodetableArn"
     }
   },
   "Conditions": {
@@ -97,12 +97,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "sensordashboardprojeLambdaRoleab94b4c1",
+            "sensordashboardprojeLambdaRole4afa2dbb",
             {
               "Fn::Join": [
                 "",
                 [
-                  "sensordashboardprojeLambdaRoleab94b4c1",
+                  "sensordashboardprojeLambdaRole4afa2dbb",
                   "-",
                   {
                     "Ref": "env"
@@ -182,14 +182,14 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storagenodeArn"
+                  "Ref": "storagenodetableArn"
                 },
                 {
                   "Fn::Join": [
                     "/",
                     [
                       {
-                        "Ref": "storagenodeArn"
+                        "Ref": "storagenodetableArn"
                       },
                       "index/*"
                     ]

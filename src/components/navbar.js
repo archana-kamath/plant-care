@@ -36,7 +36,7 @@ function NavBar() {
       {/* <!-- Left links --> */}
    
       {/* <!-- Left links --> */}
-      <a class="navbar-nav ms-auto mb-2 mb-lg-0" href="/profile">Welcome </a>
+      <a class="navbar-nav ms-auto mb-2 mb-lg-0" href="/profile" style={{textDecoration:'none', color:'black'}}>Welcome </a>
       &nbsp;&nbsp;
       <div class="dropdown">
         <a
