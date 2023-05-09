@@ -1,32 +1,64 @@
-.title {
-    color: gray;
+title {
+  color: black;
+  float:left;
+  margin: 25px;
 }
 
 .signout {
-    position: relative;
-    background-color: rgb(216, 175, 71);
-    font-weight:bold;
-    color:rgb(84, 82, 82);
-    border-radius: 1em;
-    width: 6em;
-    height: 3em;
-    left: 35em;
-    bottom: 4em;
+  position: relative;
+  background-color: rgb(216, 175, 71);
+  font-weight:bold;
+  color:rgb(84, 82, 82);
+  border-radius: 1em;
+  width: 6em;
+  height: 3em;
+  left: 35em;
+  bottom: 4em;
 }
 
 .amplify-button[data-variation='primary'] {
-    background: linear-gradient(
-      to right,
-      var(--amplify-colors-green-80),
-      var(--amplify-colors-orange-40)
-    );
-  }
+  background: linear-gradient(
+    to right,
+    var(--amplify-colors-green-80),
+    var(--amplify-colors-orange-40)
+  );
+}
 
-  .sameRow {
-    font-family: sans-serif;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
+.grid {
+  margin-left: 20rem;
+}
+
+.cardTitle {
+  margin-left: 4em;
+}
+
+.dropdownNew {
+  background: none;
+  border: none;
+  top: 15px;
+  left: 20px;
+  margin: 15px;
+  font-family: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+}
+
+.meters {
+  margin-left: 30px;
+}
+
+.typeCardMeter {
+  /* background: linear-gradient(
+    to right,
+    var(--amplify-colors-green-80),
+    var(--amplify-colors-orange-40)
+  ); */
+  position: relative;
+  display: flex;
+}
+
+.sameRow {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
