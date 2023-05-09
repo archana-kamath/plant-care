@@ -249,9 +249,10 @@ function Dashboard2() {
   <div>
     <Grid className='grid' container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         <Grid  item xs={4}>
-            <Card className= "meters" style={{backgroundColor:'blanchedalmond', borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
+            <Card className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', bottom:'88em', right:'35px'}}>
             <Card.Title  style={{fontSize:"1.5em", fontStyle:"oblique"}}> <Card.Img style={{ width:'2em'}} src="https://img.icons8.com/windows/40/null/temperature--v1.png"></Card.Img>
-Temperature</Card.Title>
+            Temperature
+            </Card.Title>
             <Card.Body style={{display:'flex', justifyContent:'space-evenly'}}>
             <Card.Text >
             <Temperature value={temp1.at(-1)} title="Temperature"/> </Card.Text>
@@ -270,7 +271,7 @@ Temperature</Card.Title>
         </Card>
         </Grid>
         <Grid item xs={4}>
-        <Card  className= "meters" style={{backgroundColor:'blanchedalmond', borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'36rem', height:'23rem'}}>
+        <Card  className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'36rem', height:'23rem', bottom:'88em', right:'35px'}}>
         <Card.Title style={{fontSize:"1.5em", fontStyle:"oblique"}}>
             <Card.Img style={{ width:'2em'}}  src="https://img.icons8.com/sf-black/40/null/humidity.png"></Card.Img>
             Humidity</Card.Title>
@@ -295,7 +296,7 @@ Temperature</Card.Title>
     <Grid className='grid' container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
     <Grid  xs={8}>
-        <Card className= "meters" style={{backgroundColor:'blanchedalmond', borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', height:"20rem", width:'66rem'}}>
+        <Card className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', height:"20rem", width:'66rem', bottom:'87em', right:'35px'}}>
         <Card.Title  style={{fontSize:"1.5em", fontStyle:"oblique"}}>
             <Card.Img style={{ width:'2em'}}  src="https://img.icons8.com/glyph-neue/40/null/moisture.png"></Card.Img>
         Moisture (in VWC)</Card.Title>          
@@ -329,13 +330,13 @@ Temperature</Card.Title>
      </Grid>
      <div>
         <Grid item md={11}>
-        <Card style={{backgroundColor:'blanchedalmond', marginLeft:'22em' ,borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'66rem'}}>
+        <Card style={{marginLeft:'22em' ,borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'66rem', bottom:'86em', right: '35px'}}>
         <Card.Body style={{display:'flex'}}>
         <h3 className='title' style={{fontStyle:'oblique', marginLeft:'20px'}}>Explore Trends</h3>
         <div style={{marginLeft:'25em'}}>
             <input style={{margin:'10px'}} type="date" ref={sdate} />
             <input type="date" ref={edate} />
-            <button style={{margin:'10px', backgroundColor:'rgb(216, 175, 71)', borderRadius:'0.5em'}} onClick={filterData}>Go..</button>
+            <button style={{margin:'10px', backgroundColor:'black', borderRadius:'0.5em', color:'#f2f2f2'}} onClick={filterData}>Go..</button>
         </div>
         </Card.Body>
         <div>
