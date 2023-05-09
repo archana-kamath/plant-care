@@ -59,6 +59,12 @@ function Profile() {
             <Row>
                 <Col><b>Contact:</b> {contact} </Col>
             </Row>
+            <br/>
+            <Row>
+                <Col>           
+                    <button style={{margin:'10px', backgroundColor:'#f2f2f2', borderRadius:'0.5em', color:'black', padding:'5px'}}><b>Edit Profile</b></button>
+                </Col>
+            </Row>
         </Container>
         </div>
         </div>

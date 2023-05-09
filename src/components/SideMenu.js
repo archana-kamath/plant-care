@@ -1,10 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
 import "react-pro-sidebar/dist/css/styles.css";
-import ListProjects from './project/listProject';
-import Home from './Home';
-import Profile from './Profile';
 
 export default function SideMenu(){
     return(
