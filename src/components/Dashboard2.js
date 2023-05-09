@@ -246,10 +246,10 @@ function Dashboard2() {
 
   return(
     
-  <div>
+  <div style={{backgroundColor:'#f2f2f2'}}>
     <Grid className='grid' container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         <Grid  item xs={4}>
-            <Card className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', bottom:'88em', right:'35px'}}>
+            <Card className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', right:'35px'}}>
             <Card.Title  style={{fontSize:"1.5em", fontStyle:"oblique"}}> <Card.Img style={{ width:'2em'}} src="https://img.icons8.com/windows/40/null/temperature--v1.png"></Card.Img>
             Temperature
             </Card.Title>
@@ -271,7 +271,7 @@ function Dashboard2() {
         </Card>
         </Grid>
         <Grid item xs={4}>
-        <Card  className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'36rem', height:'23rem', bottom:'88em', right:'35px'}}>
+        <Card  className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'36rem', height:'23rem', right:'35px'}}>
         <Card.Title style={{fontSize:"1.5em", fontStyle:"oblique"}}>
             <Card.Img style={{ width:'2em'}}  src="https://img.icons8.com/sf-black/40/null/humidity.png"></Card.Img>
             Humidity</Card.Title>
@@ -296,7 +296,7 @@ function Dashboard2() {
     <Grid className='grid' container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
     <Grid  xs={8}>
-        <Card className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', height:"20rem", width:'66rem', bottom:'87em', right:'35px'}}>
+        <Card className= "meters" style={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', height:"20rem", width:'66rem', right:'35px'}}>
         <Card.Title  style={{fontSize:"1.5em", fontStyle:"oblique"}}>
             <Card.Img style={{ width:'2em'}}  src="https://img.icons8.com/glyph-neue/40/null/moisture.png"></Card.Img>
         Moisture (in VWC)</Card.Title>          
@@ -330,7 +330,7 @@ function Dashboard2() {
      </Grid>
      <div>
         <Grid item md={11}>
-        <Card style={{marginLeft:'22em' ,borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'66rem', bottom:'86em', right: '35px'}}>
+        <Card style={{marginLeft:'22em' ,borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey', width:'66rem', right: '35px'}}>
         <Card.Body style={{display:'flex'}}>
         <h3 className='title' style={{fontStyle:'oblique', marginLeft:'20px'}}>Explore Trends</h3>
         <div style={{marginLeft:'25em'}}>

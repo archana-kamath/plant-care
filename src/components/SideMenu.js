@@ -4,7 +4,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 
 export default function SideMenu(){
     return(
-        <ProSidebar style={{ height: "210vh" }}>
+        <ProSidebar style={{ height: "210vh", position:'fixed' }}>
             <Menu>
                 <MenuItem >
                 <a href="/">
