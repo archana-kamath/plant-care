@@ -228,15 +228,15 @@ function Dashboard2() {
     }
 
     const chart = () => {
-        // if(dates && dataPoints ){
-        //     setChartData(
-        //        withDates
-        //     );
-        // }else{
+        if(dates && dataPoints ){
+            setChartData(
+               withDates
+            );
+        }else{
             setChartData(
                 defaultValues
             );
-        //}
+        }
     };
     
     useInterval(()=>{
