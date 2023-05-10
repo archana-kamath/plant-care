@@ -14,7 +14,7 @@ import SideMenu from './SideMenu';
 async function getUserProjects()
 {
   const user = await Auth.currentAuthenticatedUser();
-    let projectsList = await getProjects(user.username);
+    let projectsList = await getProjects(user.attributes.email);
     let nl = []
     for (const element of projectsList)
     {
@@ -99,7 +99,8 @@ function Dashboard2() {
             <Grid  container spacing={{ xs:2 , md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 <SideMenu/>
                 <div style={{marginLeft:'290px', display:'flex', position:'relative'}}>
-                <Grid  item xs={4}>
+               
+                <Grid  item xs={4}> <br/>
                 <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Farm</Card.Title>
@@ -119,7 +120,7 @@ function Dashboard2() {
                </Card.Body>
                 </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4}><br/>
                 <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Office</Card.Title>
@@ -142,7 +143,7 @@ function Dashboard2() {
             </Card.Body>
             </Card>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4}><br/>
             <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Home</Card.Title>
