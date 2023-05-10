@@ -21,8 +21,8 @@ export default function AddProject(){
     async function fetchUser() {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        setUserId(user.username);
-        console.log("user is ",user.username);
+        setUserId(user.attributes.email);
+        console.log("user is ",user.attributes.email);
       } catch (error) {
         console.log('Error fetching user:', error);
       }

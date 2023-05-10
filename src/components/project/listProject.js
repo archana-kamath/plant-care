@@ -30,7 +30,7 @@ export default function ListProjects() {
     const response = new Promise(async (resolve, reject) => {
       const user = await Auth.currentAuthenticatedUser();
       if (user){
-        console.log("use effect",user.username);
+        console.log("use effect",user.attributes.email);
         resolve(user);
       }
       else{
@@ -39,9 +39,9 @@ export default function ListProjects() {
     
     response.then(res=>
       {
-        console.log("res = ",res.username);
-        setUserId(res.username);
-        fetchItems(res.username);
+        console.log("res = ",res.attributes.email);
+        setUserId(res.attributes.email);
+        fetchItems(res.attributes.email);
       })
 
   },  []);

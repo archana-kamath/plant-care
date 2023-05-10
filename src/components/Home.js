@@ -38,9 +38,9 @@ const formFields = {
           ]}>
         {({ signOut, user }) => (
           <main>
-            <div>
-                <h5 className='title' style={{float:'right', marginRight:'51px', top:'20px'}}>{user.username}</h5>
-                <button className='signout' onClick={ signOut }>Log Out</button>
+            <div style={{display:'flex', backgroundColor:'#000', position:'relative', opacity:'0.9'}}>
+                <p className='title'  style={{color:'#adadad',top:'7px', marginLeft:'30px'}}>Logged in as {user.username}</p>
+                <button className='signout' style={{top:'2px', float:'right', marginLeft:'70rem'}} onClick={ signOut }>Sign Out</button><br/>
 
             </div>
               <Dashboard1/>
