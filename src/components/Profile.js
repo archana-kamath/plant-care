@@ -40,7 +40,7 @@ function Profile() {
         <div className="profile">
             <h2 className='myprofile'>My Profile</h2>
             <div className="avatar">
-                 <img src={avatar} alt="avatar"></img>
+                 <img src="https://img.icons8.com/officel/80/null/test-account.png" alt="avatar"></img>
             </div>
         <div className="userDetails">
         <Container>
