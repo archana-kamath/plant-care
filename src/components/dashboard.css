@@ -6,9 +6,9 @@ title {
 
 .signout {
   /* position: relative; */
-  background-color: #f2f2f2;
+  background-color: black;
   font-weight:bold;
-  color:black;
+  color:#f2f2f2;
   border-radius: 1em;
   width: 6em;
   height: 2.5em;
