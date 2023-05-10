@@ -119,12 +119,15 @@ function Dashboard2() {
                </Card.Body>
                 </Card>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                 <Card className= "meters" style ={{ borderRadius:'2.5rem', boxShadow:'10px 5px 5px dimgrey'}}>
                 <Card.Body>
                 <Card.Title className='cardTitle' style={{fontSize:"1.5em", fontStyle:"oblique"}}>Office</Card.Title>
+                <div style={{display:'flex'}}>
                 <Card.Img style={{ width:'6em', float:'left'}}  src="https://img.icons8.com/external-flaticons-flat-flat-icons/100/null/external-office-wayfinding-flaticons-flat-flat-icons-2.png"></Card.Img>
-                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative', float:'right'}}>{proj_type.office.length}</Card.Subtitle>
+                    <Card.Subtitle style={{fontSize:"5em", fontStyle:"oblique", fontFamily:"serif", display:'flex', position:'relative', float:'right', marginLeft:'100px'}}>{proj_type.office.length}</Card.Subtitle>
+                </div>
+                
             <Dropdown className='dropdownNew' title="Select an Office Project">
                 {(nodelist_office).map(([key,value]) => 
                     (<Dropdown.Item >{key}
