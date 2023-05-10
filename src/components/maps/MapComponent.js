@@ -17,7 +17,7 @@ const containerStyle = {
   
 class MapComponent extends Component {
 
-    
+  
     constructor(props) {
         super(props);
 
@@ -70,7 +70,7 @@ class MapComponent extends Component {
     return (
         <Container fluid>
     
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+        <LoadScript googleMapsApiKey="AIzaSyDiFqPUke-Q0VOHqrhEYxlonoRLIukWXPA">
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
