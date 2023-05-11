@@ -56,6 +56,12 @@
       },
       "api": {
         "dashboardapi": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "du3blwm6ofmaq",
+          "type": "manual"
+        }
       }
     }
   }

@@ -316,5 +316,12 @@
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual"
+    }
   }
 }
