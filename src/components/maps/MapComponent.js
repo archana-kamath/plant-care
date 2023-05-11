@@ -70,7 +70,7 @@ class MapComponent extends Component {
     return (
         <Container fluid>
     
-        <LoadScript googleMapsApiKey="AIzaSyDiFqPUke-Q0VOHqrhEYxlonoRLIukWXPA">
+        <LoadScript googleMapsApiKey="">
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
