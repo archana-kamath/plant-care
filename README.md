@@ -41,3 +41,43 @@ Climate change and farmers' limited technological knowledge makes it necessary t
 * Cloud Watch: A monitoring service to keep track of the health and utilization of resources.
 
 ## Application Screenshots:
+
+* Application Signin:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 05 54 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/8d786373-5370-4fb9-b2fa-7777d76d143f">
+
+
+* New user SignUp:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 06 14 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/01ed4acf-ea5a-47a1-aa18-e58ce0854818">
+
+
+* User Profile:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 02 46 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/710fadd9-9175-486e-812b-7fb3f31152b9">
+
+
+* Manage Projects:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 03 11 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/afd2de0a-8e87-4099-938b-b1a24f4a44b9">
+
+
+* Add New Project:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 03 25 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/4cc16b74-76f3-4742-8694-08bac7c40e51">
+
+
+* Manage a Node:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 04 01 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/d0cc0550-9003-434e-9be1-f6c04e2df7c4">
+
+
+* Dashboard showing user project count:
+<img width="1440" alt="Screenshot 2023-05-10 at 10 59 47 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/90c12bcc-9141-4d6b-9261-2096d34f2ce0">
+
+
+* Dashboard showing last recorded moisture and the percentage closer to threshold:
+<img width="1440" alt="Screenshot 2023-05-10 at 10 59 33 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/7bb2eb3b-f052-4652-a4e6-853d8b6b6039">
+
+
+* Dashboard showing trends of a node during selected date range:
+<img width="1440" alt="Screenshot 2023-05-10 at 11 01 58 AM" src="https://github.com/archana-kamath/plant-care/assets/27188674/ab0e5ae0-10c4-4cf9-8a0b-2b590ee5c4bd">
+
+
+* A sample notification email sent to user when recorded parameters are dropped below set thresholds:
+<img width="626" alt="image" src="https://github.com/archana-kamath/plant-care/assets/27188674/38242dc2-5409-4cbd-a39c-b33889b01108">
+
