@@ -81,3 +81,11 @@ Climate change and farmers' limited technological knowledge makes it necessary t
 * A sample notification email sent to user when recorded parameters are dropped below set thresholds:
 <img width="626" alt="image" src="https://github.com/archana-kamath/plant-care/assets/27188674/38242dc2-5409-4cbd-a39c-b33889b01108">
 
+## Hardware Setup: 
+
+Required components 
+ESP8266 wi-fi modules, DHT11 Temperature sensor, Capacitive moisture sensor, jumper wire, breadboard, micro USB cable 
+
+The components are connected as shown in below image. The code written in Arduino IDE sends the sensor data from processor to AWS IoT Cloud.
+
+<img width="1440" alt="image" src="">
