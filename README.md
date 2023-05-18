@@ -86,6 +86,6 @@ Climate change and farmers' limited technological knowledge makes it necessary t
 Required components 
 ESP8266 wi-fi modules, DHT11 Temperature sensor, Capacitive moisture sensor, jumper wire, breadboard, micro USB cable 
 
-The components are connected as shown in below image. The code written in Arduino IDE sends the sensor data from processor to AWS IoT Cloud.
+The components are connected as shown in below image. The code written in Arduino IDE sends the sensor data from processor to AWS IoT Core.
 
 <img width="1440" alt="image" src="">
