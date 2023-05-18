@@ -2,7 +2,7 @@
 
 ## Project Introduction
 
-Climate change and farmers' limited technological knowledge makes it necessary to create an IoT based intelligent farming system.Utilizing IoT sensors makes it possible to handle environmental conditions with ease. With the help of sensor information, essential aspects, such as pH, temperature, and humidity, can be monitored. This helps farmers monitor the health of the plants. The sensor readings collected over time are used to train machine learning models. The models help predict the future health of the plant. The data can be analyzed and can be used as one of the important requirements for controlling the irrigation or the other needs of the plants.
+Climate change and farmers' limited technological knowledge makes it necessary to create an IoT based intelligent farming system.Utilizing IoT sensors makes it possible to handle environmental conditions with ease. With the help of sensor information, essential aspects, such as pH, temperature, and humidity, can be monitored. This helps farmers monitor the health of the plants. Any user can create an account and securely login to the application and create projects ranging from a big farm to an indoor plants. Each of these projects have an option to add nodes (a single unit of plant) and identify the location of it on google maps by providing its latitude and langitude. A dashboard which showcases various projects of a user and analysis of the last updated temperature, humidity and moisture can be seen along with the past trends in a particular date range.
 
 ## Architecture Diagram:
 
