@@ -84,8 +84,10 @@ Climate change and farmers' limited technological knowledge makes it necessary t
 ## Hardware Setup: 
 
 Required components 
-ESP8266 wi-fi modules, DHT11 Temperature sensor, Capacitive moisture sensor, jumper wire, breadboard, micro USB cable 
+ESP8266 wi-fi modules, DHT11 Temperature sensor, Capacitive moisture sensor, jumper wire, breadboard, micro USB cable.
 
-The components are connected as shown in below image. The code written in Arduino IDE sends the sensor data from processor to AWS IoT Core.
+The components are connected as shown in below image. ESP8266 is connected to laptop using USB cable. The The code written in Arduino IDE sends the sensor data from processor to AWS IoT Core. 
 
-<img width="1440" alt="image" src="">
+<img width="515" alt="Hardware Design" src="https://github.com/archana-kamath/plant-care/assets/68199391/2ffadf4e-9cf3-48a4-b045-94bb2dff8f29">
+
+
